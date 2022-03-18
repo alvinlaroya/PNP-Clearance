@@ -1,0 +1,1 @@
+export const personnels = (state) => state.users

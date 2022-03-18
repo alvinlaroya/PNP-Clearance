@@ -1,0 +1,182 @@
+.all {
+    font-size: 5px;
+}
+.image1 {
+  margin-right: -170px;
+  margin-top: 10px;
+}
+
+.col1 {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.col2 {
+    display: flex;
+    flex-direction: row;
+}
+
+.header-print {
+  color: black;
+  font-weight: bold;
+  text-align: center;
+  font-size: 12px;
+}
+
+.header-text {
+    margin-bottom: -30px;
+}
+
+.redText {
+  color: red;
+}
+
+.image2 {
+  margin-left: -170px;
+  margin-top: 10px;
+}
+
+.tr1 {
+  line-height: 2px;
+}
+
+.th1 {
+  color: black;
+  text-align: center;
+  font-weight: normal;
+  font-size: 10px;
+}
+
+.th2 {
+  color: black;
+  text-align: center;
+  font-weight: normal;
+  font-size: 10px;
+}
+
+.th3 {
+  color: black;
+  width: 350px;
+  text-align: center;
+  font-weight: normal;
+  font-size: 10px;
+}
+
+.th4 {
+  color: black;
+  text-align: center;
+  font-weight: bold;
+  font-size: 10px;
+}
+
+.tr2 {
+  height: 15px;
+}
+
+.a1 {
+  margin-top: -20px;
+  font-size: 12px;
+}
+
+.a2 {
+  margin-left: 60px;
+  font-size: 12px;
+}
+
+.a3 {
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+.a4 {
+  margin-top: -30px;
+  margin-left: 60px;
+  height: 120px;
+  width: 130px;
+  border: 2px solid gray;
+}
+
+.a5 {
+    margin-top: 25px;
+    text-align: center;
+    width: 130px;
+    margin-left: 60px;
+}
+
+.a6 {
+    font-weight: bold;
+    color: black;
+    font-size: 12px;
+}
+
+.a7 {
+    color: red;
+    font-size: 12px;
+}
+
+.table {
+    font-size: 11px;
+}
+
+.trmany {
+    line-height: 6px;
+}
+
+.tdwidth {
+    width: 200px;
+}
+
+.trb1 {
+    height: 90px;
+}
+
+.trb2 {
+    line-height: 10px;
+}
+
+.tdcenter {
+    text-align: center;
+}
+
+.borderDiv {
+    border-top: 3px dashed red;
+}
+
+.colb1{
+    margin-top:-20px;
+}
+
+.signature {
+    font-size: 10px;
+}
+
+.towhom {
+    margin-top: -30px;
+}
+
+.copydiv {
+    margin-top: 50px;
+}
+
+.cuthr {
+    margin-bottom: -30px;
+}
+
+.validfortwo {
+    color: black;
+    font-weight: bold;
+    margin-top: 30px;
+}
+
+.personalcopy {
+    color: rgb(20, 155, 209);
+    font-weight: bold;
+}
+
+.valid {
+    text-align: center;
+}
+
+.bold {
+    font-weight: bold;
+}
