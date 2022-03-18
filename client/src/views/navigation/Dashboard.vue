@@ -225,7 +225,7 @@
                   class="image1"
                   contain
                   max-height="86"
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Philippine_National_Police_seal.svg/1200px-Philippine_National_Police_seal.svg.png"
+                  src="../../images/pnp.png"
                 ></v-img>
               </v-col>
               <v-col cols="8" class="header-print">
@@ -241,12 +241,12 @@
                 <v-img
                   class="image2"
                   contain
-                  max-height="86"
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Philippine_National_Police_seal.svg/1200px-Philippine_National_Police_seal.svg.png"
+                  max-height="66"
+                  src="../../images/logo.png"
                 ></v-img>
               </v-col>
             </v-row>
-            <v-row>
+            <v-row class="reg" style="margin-top: -20px">
               <v-col cols="12">
                 <table>
                   <tr class="tr1">
