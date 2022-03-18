@@ -63,12 +63,12 @@ module.exports = (sequelize, DataTypes) => {
            user.password = bcrypt.hashSync(user.password, salt);
           }
          },
-         beforeUpdate:async (user) => {
+         /* beforeUpdate:async (user) => {
           if (user.password) {
            const salt = await bcrypt.genSaltSync(10, 'a');
            user.password = bcrypt.hashSync(user.password, salt);
           }
-         }
+         } */
         },
         instanceMethods: {
          validPassword: (password) => {

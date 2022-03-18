@@ -34,7 +34,7 @@
             :search="search"
           >
             <template v-slot:item.actions="{ item }">
-              <v-icon class="mr-2" color="green" @click="editItem(item)">
+              <v-icon class="mr-2" color="green" @click="editItem(item)" :disabled="!currentUser.hasUpdate">
                 mdi-file-document-edit
               </v-icon>
             </template>
@@ -123,7 +123,8 @@
 
 <script>
 import { createNamespacedHelpers } from "vuex";
-const { mapGetters, mapActions } = createNamespacedHelpers("navigation");
+const { mapGetters: navigationMapGetters, mapActions: navigationMapActions } = createNamespacedHelpers("navigation");
+const { mapGetters: authMapGatters } = createNamespacedHelpers("auth");
 
 export default {
   data: () => ({
@@ -178,7 +179,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["fetchUsers", "updateUser"]),
+    ...navigationMapActions(["fetchUsers", "updateUser"]),
     editItem(item) {
       this.user = item
       this.updateDialog = true
@@ -219,7 +220,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["personnels"]),
+    ...navigationMapGetters(["personnels"]),
+    ...authMapGatters(["currentUser"])
   },
   created() {
     this.setBadge();

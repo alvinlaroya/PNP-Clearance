@@ -122,7 +122,6 @@ export default {
       },
     ],
     otherOptions: [
-      { text: "Update Profile", icon: "mdi-account-edit", iconColor: "orange", method: "profile" },
       { text: "Sign Out", icon: "mdi-logout-variant", iconColor: "red", method: "logout"},
     ],
   }),

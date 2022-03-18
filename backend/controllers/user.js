@@ -4,6 +4,7 @@ const { Sequelize } = require("sequelize");
 const Op = Sequelize.Op;
 const db = require("../models");
 const jwt = require("jsonwebtoken");
+const { use } = require("../routes/user");
 
 // MODEL
 const User = db.users;
@@ -96,7 +97,7 @@ const getAllUsers = async (req, res) => {
   });
 }
 
-// UPDATE CASE
+// UPDATE USER
 const updatePersonnel = async (req, res) => {
   const user = req.body;
 
@@ -105,6 +106,7 @@ const updatePersonnel = async (req, res) => {
     resultUser.update({
       verified: user.verified,
       status: user.status.value,
+      hasUpdate: user.hasUpdate
     })
   }
 

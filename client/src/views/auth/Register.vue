@@ -93,9 +93,7 @@
                           v-on="on"
                         ></v-text-field>
                       </template>
-                      <v-date-picker
-                        v-model="user.birthDate"
-                      ></v-date-picker>
+                      <v-date-picker v-model="user.birthDate"></v-date-picker>
                     </v-menu>
                   </v-col>
                   <v-col md="6">
@@ -142,12 +140,7 @@
       {{ text }}
 
       <template v-slot:action="{ attrs }">
-        <v-btn
-          color="black"
-          text
-          v-bind="attrs"
-          @click="snackbar = false"
-        >
+        <v-btn color="black" text v-bind="attrs" @click="snackbar = false">
           Close
         </v-btn>
       </template>
@@ -186,7 +179,7 @@ export default {
     password: "",
     passwordRules: [(v) => !!v || "Password is required"],
     snackbar: false,
-    text: 'My timeout is set to 2000.',
+    text: "My timeout is set to 2000.",
     timeout: 2000,
   }),
 
@@ -194,10 +187,12 @@ export default {
     ...mapActions(["getAddresses", "register"]),
     validate() {
       const valid = this.$refs.form.validate();
-      if(valid) this.register(this.user)
-      this.$refs.form.reset();
-      this.snackbar = true
-      this.text = "Account Successfully Created"
+      if (valid) {
+        this.register(this.user);
+        this.$refs.form.reset();
+        this.snackbar = true;
+        this.text = "Account Successfully Created";
+      }
     },
     reset() {
       this.$refs.form.reset();
@@ -211,10 +206,9 @@ export default {
     ...mapGetters(["addresses"]),
   },
 
-
   mounted() {
-      this.getAddresses()
-  }
+    this.getAddresses();
+  },
 };
 </script>
 <style></style>
