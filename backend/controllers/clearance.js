@@ -153,8 +153,8 @@ const updateClearance = async (req, res) => {
 
   if (clearance.issuedOn != "") {
     const from = "Vonage APIs";
-    const to = `639${phone}`;
-    const text = `Good day ${fname}, Your application for Police Clearance will be issue on ${issuedOn}. Thank You!`;
+    const to = `639${clearance.phone}`;
+    const text = `Good day ${clearance.fname}, Your application for Police Clearance will be issue on ${clearance.issuedOn}. Thank You!`;
 
     vonage.message.sendSms(from, to, text, (err, responseData) => {
       if (err) {
