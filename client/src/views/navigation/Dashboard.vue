@@ -251,15 +251,13 @@
                 <table>
                   <tr class="tr1">
                     <th class="th1">Reg. No</th>
-                    <th class="th2">Full Name</th>
-                    <th class="th3">Country</th>
-                    <th class="th4">ORIGINAL COPY</th>
+                    <th class="th3">Full Name</th>
+                    <th class="th2">Date Applied</th>
                   </tr>
                   <tr class="tr2">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{ getRegNo(currentItem.id, currentItem.issuedAt) }}</td>
+                    <td style="text-align: center;">{{ `${currentItem.fname} ${currentItem.mname} ${currentItem.lname}` }}</td>
+                    <td style="text-align: center;">{{ dateTimeFormat(currentItem.issuedAt) }}</td>
                   </tr>
                 </table>
               </v-col>
@@ -397,15 +395,13 @@
                 <table>
                   <tr class="tr1">
                     <th class="th1">Reg. No</th>
-                    <th class="th2">Full Name</th>
-                    <th class="th3">Country</th>
-                    <th class="th4">ORIGINAL COPY</th>
+                    <th class="th3">Full Name</th>
+                    <th class="th2">Date Applied</th>
                   </tr>
                   <tr class="tr2">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{ getRegNo(currentItem.id, currentItem.issuedAt) }}</td>
+                    <td style="text-align: center;">{{ `${currentItem.fname} ${currentItem.mname} ${currentItem.lname}` }}</td>
+                    <td style="text-align: center;">{{ dateTimeFormat(currentItem.issuedAt) }}</td>
                   </tr>
                 </table>
               </v-col>
@@ -669,6 +665,14 @@ export default {
       this.dialog = true;
       this.dialogDisplayImage = src;
     },
+    getRegNo(id, date){ 
+      const year = new Date(date).getFullYear();
+      const month = new Date(date).getMonth();
+      const day = new Date(date).getDate();
+      const finalDay = day >= 9 ? new Date(date).getDate() : `0${new Date(date).getDate()}`;
+      const finalMonth = month >= 9 ? new Date(date).getMonth() : `0${new Date(date).getMonth()}`
+      return `${finalMonth}-${finalDay}-${year}-${id}`
+    }
   },
   computed: {
     ...mapGetters(["allClearance", "verifiedClearance", "badges"]),

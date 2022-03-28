@@ -14,6 +14,7 @@ export const fetchClearance = ({ commit }) => {
 };
 
 export const addClearance = (_, payload) => {
+  console.log("Fresh", ...payload)
   EventService.addClearanceEvent(payload)
     .then((response) => {
       console.log(response)

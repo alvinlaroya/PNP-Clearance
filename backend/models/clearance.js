@@ -65,10 +65,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER
         },
         issuedAt: {
-            type: DataTypes.INTEGER
+            type: DataTypes.DATE,
         },
         issuedOn: {
-            type: DataTypes.INTEGER
+            type: DataTypes.DATE,
         },
         cedula: {
             type: DataTypes.STRING
