@@ -251,7 +251,7 @@
                 <table>
                   <tr class="tr1">
                     <th class="th1">Reg. No</th>
-                    <th class="th2">Date Applied</th>
+                    <th class="th2">Full Name</th>
                     <th class="th3">Country</th>
                     <th class="th4">ORIGINAL COPY</th>
                   </tr>
@@ -397,7 +397,7 @@
                 <table>
                   <tr class="tr1">
                     <th class="th1">Reg. No</th>
-                    <th class="th2">Date Applied</th>
+                    <th class="th2">Full Name</th>
                     <th class="th3">Country</th>
                     <th class="th4">ORIGINAL COPY</th>
                   </tr>
