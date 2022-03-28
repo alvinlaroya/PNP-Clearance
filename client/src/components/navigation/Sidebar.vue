@@ -68,7 +68,7 @@
       <v-divider></v-divider>
       <v-list-item dense>
         <v-list-item-content class="text-center">
-          <v-list-item-title style="font-size: 16px">Sison, Pagansinan</v-list-item-title>
+          <v-list-item-title style="font-size: 16px">Sison, Pangasinan</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>

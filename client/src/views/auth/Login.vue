@@ -8,7 +8,7 @@
             >Login to Dashboard</span
           >
           <v-card-subtitle
-            >Wed Based Philippine National Police Clearance Issuance System of
+            >Web Based Philippine National Police Clearance Issuance System of
             Sison , Pangasinan.</v-card-subtitle
           >
 
