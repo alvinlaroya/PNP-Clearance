@@ -1,6 +1,46 @@
 <template>
   <v-container fluid>
     <v-row>
+      <v-col cols="6">
+        <v-card>
+          <v-card-text>
+            <v-card-title> Total Clearance Application </v-card-title><br />
+            <span class="ml-4" style="font-size: 60px">{{
+              allClearance.length
+            }}</span>
+            <v-icon
+              x-large
+              style="
+                font-size: 100px;
+                position: absolute;
+                top: 30px;
+                right: 50px;
+              "
+              >mdi-file-document-multiple-outline</v-icon
+            >
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col cols="6">
+        <v-card>
+          <v-card-text>
+            <v-card-title> Total Clearance Issued </v-card-title><br />
+            <span class="ml-4" style="font-size: 60px">{{
+              issuedClearanceCount
+            }}</span>
+            <v-icon
+              x-large
+              style="
+                font-size: 100px;
+                position: absolute;
+                top: 30px;
+                right: 50px;
+              "
+              >mdi-file-document-edit-outline</v-icon
+            >
+          </v-card-text>
+        </v-card>
+      </v-col>
       <v-col cols="12">
         <v-card>
           <v-card-title class="text-h6"
@@ -58,6 +98,13 @@
                 class="elevation-1"
               >
                 <template v-slot:item.actions="{ item }">
+                  <v-icon
+                    class="mr-2"
+                    color="green"
+                    @click="approveClearance(item)"
+                  >
+                    mdi-file-check-outline
+                  </v-icon>
                   <v-icon class="mr-2" color="green" @click="editItem(item)">
                     mdi-file-document-edit
                   </v-icon>
@@ -137,6 +184,13 @@
                 class="elevation-1"
               >
                 <template v-slot:item.actions="{ item }">
+                  <v-icon
+                    class="mr-2"
+                    color="green"
+                    @click="approveClearance(item)"
+                  >
+                    mdi-file-check-outline
+                  </v-icon>
                   <v-icon class="mr-2" color="green" @click="editItem(item)">
                     mdi-file-document-edit
                   </v-icon>
@@ -149,9 +203,6 @@
                 </template>
                 <template v-slot:item.amount="{ item }">
                   ₱{{ item.amount }}
-                </template>
-                <template v-slot:item.issuedAt="{ item }">
-                  {{ dateTimeFormat(item.issuedAt) }}
                 </template>
                 <template v-slot:item.issuedOn="{ item }">
                   {{ dateTimeFormat(item.issuedOn) }}
@@ -229,12 +280,22 @@
                 ></v-img>
               </v-col>
               <v-col cols="8" class="header-print">
-                <div class="header-text">Republic of the Philippines</div><br />
-                <div class="header-text">NATIONAL POLICE COMMISSION</div><br />
-                <div class="header-text redText">PHILIPPINE NATIONAL POLICE</div><br />
-                <div class="header-text redText">POLICE REGIONAL OFFICE 1</div><br />
-                <div class="header-text">Pangasinan Police Provincial Office</div><br />
-                <div class="header-text">Sison Municipal Police Station</div><br />
+                <div class="header-text">Republic of the Philippines</div>
+                <br />
+                <div class="header-text">NATIONAL POLICE COMMISSION</div>
+                <br />
+                <div class="header-text redText">
+                  PHILIPPINE NATIONAL POLICE
+                </div>
+                <br />
+                <div class="header-text redText">POLICE REGIONAL OFFICE 1</div>
+                <br />
+                <div class="header-text">
+                  Pangasinan Police Provincial Office
+                </div>
+                <br />
+                <div class="header-text">Sison Municipal Police Station</div>
+                <br />
                 <div>Sison, Pangasinan</div>
               </v-col>
               <v-col cols="2" class="col2">
@@ -255,9 +316,17 @@
                     <th class="th2">Date Applied</th>
                   </tr>
                   <tr class="tr2">
-                    <td>{{ getRegNo(currentItem.id, currentItem.issuedAt) }}</td>
-                    <td style="text-align: center;">{{ `${currentItem.fname} ${currentItem.mname} ${currentItem.lname}` }}</td>
-                    <td style="text-align: center;">{{ dateTimeFormat(currentItem.issuedAt) }}</td>
+                    <td>
+                      {{ getRegNo(currentItem.id, currentItem.issuedAt) }}
+                    </td>
+                    <td style="text-align: center">
+                      {{
+                        `${currentItem.fname} ${currentItem.mname} ${currentItem.lname}`
+                      }}
+                    </td>
+                    <td style="text-align: center">
+                      {{ dateTimeFormat(currentItem.issuedAt) }}
+                    </td>
                   </tr>
                 </table>
               </v-col>
@@ -276,22 +345,30 @@
                 ><br />
                 <div class="a3">
                   <span
-                    ><span class="bold">Address:</span> <u>{{ currentItem.address }}</u></span
+                    ><span class="bold">Address:</span>
+                    <u>{{ currentItem.address }}</u></span
                   ><br />
                   <span
-                    ><span class="bold">Date of Birth:</span> <u>{{ dateFormat(currentItem.dateOfBirth) }}</u> <span class="bold">Place
-                    of Birth:</span> <u>{{ currentItem.placeOfBirth }}</u> <span class="bold">Age:</span>
+                    ><span class="bold">Date of Birth:</span>
+                    <u>{{ dateFormat(currentItem.dateOfBirth) }}</u>
+                    <span class="bold">Place of Birth:</span>
+                    <u>{{ currentItem.placeOfBirth }}</u>
+                    <span class="bold">Age:</span>
                     <u>{{ currentItem.age }}</u></span
                   ><br />
                   <span
                     ><span class="bold">Civil Status:</span>
-                    <u>{{ currentItem.civilStatus }}</u> <span class="bold">Citizenship:</span>
-                    <u>{{ currentItem.citizenship }}</u> <span class="bold">Height:</span>
-                    <u>{{ currentItem.height }}</u> <span class="bold">Weight:</span>
+                    <u>{{ currentItem.civilStatus }}</u>
+                    <span class="bold">Citizenship:</span>
+                    <u>{{ currentItem.citizenship }}</u>
+                    <span class="bold">Height:</span>
+                    <u>{{ currentItem.height }}</u>
+                    <span class="bold">Weight:</span>
                     <u>{{ currentItem.weight }}</u></span
                   ><br />
                   <span
-                    ><span class="bold">Purpose:</span> <u>{{ currentItem.purpose }}</u></span
+                    ><span class="bold">Purpose:</span>
+                    <u>{{ currentItem.purpose }}</u></span
                   >
                 </div>
               </v-col>
@@ -331,11 +408,13 @@
                   </tr>
                   <tr class="trmany">
                     <td>Issued at:</td>
-                    <td class="tdwidth">{{ dateTimeFormat(currentItem.issuedAt) }}</td>
+                    <td class="tdwidth">Sison, Pangasinan</td>
                   </tr>
                   <tr class="trmany">
                     <td>Issued on:</td>
-                    <td class="tdwidth">{{ dateTimeFormat(currentItem.issuedOn) }}</td>
+                    <td class="tdwidth">
+                      {{ dateTimeFormat(currentItem.issuedOn) }}
+                    </td>
                   </tr>
                   <tr class="trmany">
                     <td>OR#</td>
@@ -343,7 +422,9 @@
                   </tr>
                   <tr class="trmany">
                     <td>Issued on:</td>
-                    <td class="tdwidth">{{ dateTimeFormat(currentItem.issuedOn) }}</td>
+                    <td class="tdwidth">
+                      {{ dateTimeFormat(currentItem.issuedOn) }}
+                    </td>
                   </tr>
                   <tr class="trmany">
                     <td>Amount</td>
@@ -368,7 +449,9 @@
                     </div>
                   </v-col>
                   <v-col cols="12" class="valid">
-                    <span class="validfortwo">VALID FOR SIX (6) MONTHS FROM DATE OF ISSUE</span>
+                    <span class="validfortwo"
+                      >VALID FOR SIX (6) MONTHS FROM DATE OF ISSUE</span
+                    >
                   </v-col>
                 </v-row>
               </v-col>
@@ -399,9 +482,17 @@
                     <th class="th2">Date Applied</th>
                   </tr>
                   <tr class="tr2">
-                    <td>{{ getRegNo(currentItem.id, currentItem.issuedAt) }}</td>
-                    <td style="text-align: center;">{{ `${currentItem.fname} ${currentItem.mname} ${currentItem.lname}` }}</td>
-                    <td style="text-align: center;">{{ dateTimeFormat(currentItem.issuedAt) }}</td>
+                    <td>
+                      {{ getRegNo(currentItem.id, currentItem.issuedAt) }}
+                    </td>
+                    <td style="text-align: center">
+                      {{
+                        `${currentItem.fname} ${currentItem.mname} ${currentItem.lname}`
+                      }}
+                    </td>
+                    <td style="text-align: center">
+                      {{ dateTimeFormat(currentItem.issuedAt) }}
+                    </td>
                   </tr>
                 </table>
               </v-col>
@@ -420,22 +511,30 @@
                 ><br />
                 <div class="a3">
                   <span
-                    ><span class="bold">Address:</span> <u>{{ currentItem.address }}</u></span
+                    ><span class="bold">Address:</span>
+                    <u>{{ currentItem.address }}</u></span
                   ><br />
                   <span
-                    ><span class="bold">Date of Birth:</span> <u>{{ dateFormat(currentItem.dateOfBirth) }}</u> <span class="bold">Place
-                    of Birth:</span> <u>{{ currentItem.placeOfBirth }}</u> <span class="bold">Age:</span>
+                    ><span class="bold">Date of Birth:</span>
+                    <u>{{ dateFormat(currentItem.dateOfBirth) }}</u>
+                    <span class="bold">Place of Birth:</span>
+                    <u>{{ currentItem.placeOfBirth }}</u>
+                    <span class="bold">Age:</span>
                     <u>{{ currentItem.age }}</u></span
                   ><br />
                   <span
                     ><span class="bold">Civil Status:</span>
-                    <u>{{ currentItem.civilStatus }}</u> <span class="bold">Citizenship:</span>
-                    <u>{{ currentItem.citizenship }}</u> <span class="bold">Height:</span>
-                    <u>{{ currentItem.height }}</u> <span class="bold">Weight:</span>
+                    <u>{{ currentItem.civilStatus }}</u>
+                    <span class="bold">Citizenship:</span>
+                    <u>{{ currentItem.citizenship }}</u>
+                    <span class="bold">Height:</span>
+                    <u>{{ currentItem.height }}</u>
+                    <span class="bold">Weight:</span>
                     <u>{{ currentItem.weight }}</u></span
                   ><br />
                   <span
-                    ><span class="bold">Purpose:</span> <u>{{ currentItem.purpose }}</u></span
+                    ><span class="bold">Purpose:</span>
+                    <u>{{ currentItem.purpose }}</u></span
                   >
                 </div>
               </v-col>
@@ -475,11 +574,13 @@
                   </tr>
                   <tr class="trmany">
                     <td>Issued at:</td>
-                    <td class="tdwidth">{{ dateTimeFormat(currentItem.issuedAt) }}</td>
+                    <td class="tdwidth">Sison, Pangasinan</td>
                   </tr>
                   <tr class="trmany">
                     <td>Issued on:</td>
-                    <td class="tdwidth">{{ dateTimeFormat(currentItem.issuedOn) }}</td>
+                    <td class="tdwidth">
+                      {{ dateTimeFormat(currentItem.issuedOn) }}
+                    </td>
                   </tr>
                   <tr class="trmany">
                     <td>OR#</td>
@@ -487,7 +588,9 @@
                   </tr>
                   <tr class="trmany">
                     <td>Issued on:</td>
-                    <td class="tdwidth">{{ dateTimeFormat(currentItem.issuedOn) }}</td>
+                    <td class="tdwidth">
+                      {{ dateTimeFormat(currentItem.issuedOn) }}
+                    </td>
                   </tr>
                   <tr class="trmany">
                     <td>Amount</td>
@@ -512,8 +615,10 @@
                     </div>
                   </v-col>
                   <v-col cols="12" class="valid">
-                    <span class="personalcopy">PERSONAL COPY</span><br>
-                    <span class="validfortwo">VALID FOR SIX (6) MONTHS FROM DATE OF ISSUE</span>
+                    <span class="personalcopy">PERSONAL COPY</span><br />
+                    <span class="validfortwo"
+                      >VALID FOR SIX (6) MONTHS FROM DATE OF ISSUE</span
+                    >
                   </v-col>
                 </v-row>
               </v-col>
@@ -569,14 +674,11 @@ export default {
         value: "actions",
         align: "start",
         sortable: false,
-        width: 100,
+        width: 130,
       },
-      {
-        text: "First name",
-        value: "fname",
-      },
-      { text: "Middle name", value: "mname" },
       { text: "Last name", value: "lname" },
+      { text: "First name", value: "fname" },
+      { text: "Middle name", value: "mname" },
       { text: "Address", value: "address" },
       { text: "Phone", value: "phone" },
       { text: "Age", value: "age" },
@@ -585,7 +687,6 @@ export default {
       { text: "Civil Status", value: "civilStatus" },
       { text: "OR#", value: "orNumber" },
       { text: "Ammout", value: "amount" },
-      { text: "Issued At", value: "issuedAt", width: 150 },
       { text: "Issued On", value: "issuedOn", width: 150 },
       { text: "Purpose", value: "purpose" },
       { text: "", value: "data-table-expand", fixed: true },
@@ -617,10 +718,36 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["fetchClearance", "setCurrentClearance"]),
+    ...mapActions([
+      "fetchClearance",
+      "setCurrentClearance",
+      "approveClearanceAction",
+      "fetchIssuedClearance",
+    ]),
     viewItem(item) {
       this.currentItem = item;
       this.viewDialog = true;
+    },
+    approveClearance(item) {
+      const self = this;
+      this.$swal({
+        title: "Are you sure?",
+        text: "This issued will be updated as issued",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          self.approveClearanceAction(item);
+          this.$swal(
+            "Issued!",
+            "This application successfully issued.",
+            "success"
+          );
+        }
+      });
     },
     editItem(item) {
       this.setCurrentClearance(item);
@@ -665,23 +792,33 @@ export default {
       this.dialog = true;
       this.dialogDisplayImage = src;
     },
-    getRegNo(id, date){ 
+    getRegNo(id, date) {
       const year = new Date(date).getFullYear();
       const month = new Date(date).getMonth();
       const day = new Date(date).getDate();
-      const finalDay = day >= 9 ? new Date(date).getDate() : `0${new Date(date).getDate()}`;
-      const finalMonth = month >= 9 ? new Date(date).getMonth() : `0${new Date(date).getMonth()}`
-      return `${finalMonth}-${finalDay}-${year}-${id}`
-    }
+      const finalDay =
+        day >= 9 ? new Date(date).getDate() : `0${new Date(date).getDate()}`;
+      const finalMonth =
+        month >= 9
+          ? new Date(date).getMonth()
+          : `0${new Date(date).getMonth()}`;
+      return `${finalMonth}-${finalDay}-${year}-${id}`;
+    },
   },
   computed: {
-    ...mapGetters(["allClearance", "verifiedClearance", "badges"]),
+    ...mapGetters([
+      "allClearance",
+      "verifiedClearance",
+      "badges",
+      "issuedClearanceCount",
+    ]),
   },
   created() {
     this.setBadge();
   },
   mounted() {
     this.fetchClearance();
+    this.fetchIssuedClearance();
   },
 };
 </script>

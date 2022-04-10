@@ -12,22 +12,21 @@
             Sison , Pangasinan.</v-card-subtitle
           >
 
-            <v-alert
-              v-if="hasLoginFail"
-              dense
-              class="ml-6 mr-6"
-              outlined
-              type="error"
-            >
-              Invalid <strong>credentials</strong> or maybe your account is not <strong>verified</strong>
-            </v-alert>
+          <v-alert
+            v-if="hasLoginFail"
+            dense
+            class="ml-6 mr-6"
+            outlined
+            type="error"
+          >
+            Invalid <strong>credentials</strong> or maybe your account is not
+            <strong>verified</strong>
+          </v-alert>
           <v-card-text class="mt-5">
             <v-container>
               <v-form ref="form" v-model="valid" lazy-validation>
                 <v-text-field
                   v-model="email"
-                  :counter="40"
-                  :rules="emailRules"
                   label="Email"
                   required
                   outlined
@@ -60,7 +59,7 @@
 
 <script>
 import { createNamespacedHelpers } from "vuex";
-const { mapActions, mapGetters} = createNamespacedHelpers("auth");
+const { mapActions, mapGetters } = createNamespacedHelpers("auth");
 
 export default {
   data: () => ({
@@ -70,19 +69,17 @@ export default {
     emailRules: [
       (v) => !!v || "E-mail is required",
       (v) => (v && v.length <= 40) || "Name must be less than 40 characters",
-      (v) => /.+@.+\..+/.test(v) || "Email must be valid"
+      (v) => /.+@.+\..+/.test(v) || "Email must be valid",
     ],
     password: "",
-    passwordRules: [
-      (v) => !!v || "Password is required",
-    ],
+    passwordRules: [(v) => !!v || "Password is required"],
   }),
 
   methods: {
-      ...mapActions(["login"]),
+    ...mapActions(["login"]),
     validate() {
       const valid = this.$refs.form.validate();
-      if(valid) this.login({email: this.email, password: this.password})
+      if (valid) this.login({ email: this.email, password: this.password });
     },
     reset() {
       this.$refs.form.reset();
@@ -92,8 +89,8 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["hasLoginFail"])
-  }
+    ...mapGetters(["hasLoginFail"]),
+  },
 };
 </script>
 <style></style>

@@ -63,6 +63,7 @@ const addClearance = async (req, res) => {
     amount,
     issuedAt,
     issuedOn,
+    issued,
     verified,
   } = req.body;
 
@@ -85,6 +86,7 @@ const addClearance = async (req, res) => {
     amount,
     issuedAt,
     issuedOn,
+    issued,
     numberOfIssued,
     verified,
     cedula: req.files["cedula"][0].path,
@@ -114,7 +116,10 @@ const addClearance = async (req, res) => {
   }
 
   const clearance = await Clearance.create(param);
-  res.status(200).send(clearance);
+  res.status(200).json({
+    message: "success",
+    currentClearance: clearance,
+  });
 };
 
 // READ CLEARANCE
@@ -140,6 +145,21 @@ const getAllClearances = async (req, res) => {
   });
 };
 
+const getAllIssuedClearances = async (req, res) => {
+  let clearances = await Clearance.findAndCountAll({
+    where: {
+      issued: true,
+    },
+    order: [["createdAt", "DESC"]],
+  });
+
+  res.header("Access-Control-Allow-Origin", "*");
+  res.json({
+    message: "success",
+    allClearance: clearances,
+  });
+};
+
 // UPDATE CLEARANCE
 const updateClearance = async (req, res) => {
   const clearance = req.body;
@@ -149,7 +169,6 @@ const updateClearance = async (req, res) => {
       id: req.params.id,
     },
   });
-
 
   if (clearance.issuedOn != "") {
     const from = "Vonage APIs";
@@ -174,6 +193,21 @@ const updateClearance = async (req, res) => {
   res.sendStatus(200);
 };
 
+const approveClearance = async (req, res) => {
+  await Clearance.update(
+    {
+      issued: true,
+    },
+    {
+      where: {
+        id: req.params.id,
+      },
+    }
+  );
+
+  res.sendStatus(200);
+};
+
 // DELETE CLEARANCE
 const deleteClearance = async (req, res) => {
   const { id } = req.body;
@@ -189,7 +223,9 @@ const deleteClearance = async (req, res) => {
 module.exports = {
   addClearance,
   getAllClearances,
+  getAllIssuedClearances,
   updateClearance,
+  approveClearance,
   deleteClearance,
   upload,
 };

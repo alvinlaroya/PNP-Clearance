@@ -153,7 +153,7 @@
                     </v-col>
                   </v-row>
                   <v-row class="mt-0">
-                     <v-col cols="3">
+                    <v-col cols="3">
                       <v-text-field
                         v-model="clearance.phone"
                         :rules="requiredRules"
@@ -174,7 +174,7 @@
                         outlined
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="2">
+                    <v-col cols="3">
                       <v-text-field
                         v-model="clearance.ctcNumber"
                         :rules="requiredRules"
@@ -183,33 +183,7 @@
                         outlined
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="2">
-                      <v-menu
-                        v-model="issuedAtMenu"
-                        :close-on-content-click="true"
-                        :nudge-left="20"
-                        transition="scale-transition"
-                        offset-y
-                        min-width="auto"
-                      >
-                        <template v-slot:activator="{ on, attrs }">
-                          <v-text-field
-                            v-model="clearance.issuedAt"
-                            label="Issued At"
-                            prepend-inner-icon="mdi-calendar"
-                            readonly
-                            flat
-                            outlined
-                            v-bind="attrs"
-                            v-on="on"
-                          ></v-text-field>
-                        </template>
-                        <v-date-picker
-                          v-model="clearance.issuedAt"
-                        ></v-date-picker>
-                      </v-menu>
-                    </v-col>
-                    <v-col cols="2">
+                    <v-col cols="3">
                       <v-menu
                         v-model="issuedOnMenu"
                         :close-on-content-click="true"
@@ -274,7 +248,10 @@
                       ></v-file-input>
                     </v-col>
                   </v-row>
-                  <v-row class="mt-0">
+                </v-container>
+                <v-container fluid style="margin-top: -15px">
+                  <h2>Related Criminal Case</h2>
+                  <v-row class="mt-0" style="margin-bottom: -40px">
                     <v-col cols="5">
                       <v-text-field
                         v-model="search"
@@ -294,11 +271,7 @@
                       </v-btn>
                     </v-col>
                   </v-row>
-                </v-container>
-                <v-container fluid style="margin-top: -15px">
-                  <h2>Related Criminal Case</h2>
-                  <br />
-                  <v-row>
+                  <v-row class="mt-0">
                     <v-col cols="12">
                       <v-simple-table dense>
                         <template v-slot:default>
@@ -332,12 +305,25 @@
                 </v-container>
                 <v-container fluid>
                   <v-row align="center" justify="end">
-                    <v-checkbox
+                    <!-- <v-checkbox
                       v-model="clearance.verified"
                       :label="clearance.verified ? 'Verified' : 'Not Verified'"
                       required
-                    ></v-checkbox>
-                    <v-btn color="success" class="mr-4 ml-10" x-large @click="validate">
+                    ></v-checkbox> -->
+                    <v-btn
+                      :disabled="!valid"
+                      :color="clearance.verified ? 'error' : 'primary'"
+                      @click="setVerified"
+                      x-large
+                    >
+                      {{ clearance.verified ? "Not Verified" : "Verified" }}
+                    </v-btn>
+                    <v-btn
+                      color="success"
+                      class="mr-4 ml-5"
+                      x-large
+                      @click="validate"
+                    >
                       Save Application
                     </v-btn>
                   </v-row>
@@ -358,12 +344,7 @@
       {{ snackbarText }}
 
       <template v-slot:action="{ attrs }">
-        <v-btn
-          color="black"
-          text
-          v-bind="attrs"
-          @click="snackbar = false"
-        >
+        <v-btn color="black" text v-bind="attrs" @click="snackbar = false">
           Close
         </v-btn>
       </template>
@@ -376,7 +357,7 @@ import { createNamespacedHelpers } from "vuex";
 const { mapGetters, mapActions } = createNamespacedHelpers("navigation");
 
 export default {
-  data: () => ({ 
+  data: () => ({
     snackbar: false,
     snackbarText: "",
     birthDateMenu: null,
@@ -434,6 +415,7 @@ export default {
       barangayClearance: null,
       cedula: null,
       ort: null,
+      issued: false,
       numberOfIssued: 1,
     },
     desserts: [
@@ -456,14 +438,26 @@ export default {
   },
   methods: {
     ...mapActions(["addClearance", "searchCase"]),
+    setVerified() {
+      this.clearance.verified = !this.clearance.verified;
+    },
     validate() {
       const valid = this.$refs.form.validate();
       if (valid) {
         var formData = this.toFormData(this.clearance);
         this.addClearance(formData);
         this.$refs.form.reset();
-        this.snackbar = true
-        this.snackbarText = "Police Clearance Application Created!"
+        this.snackbar = true;
+        this.snackbarText = "Police Clearance Application Created!";
+        this.$router.replace({ name: "navigation.dashboard" });
+
+        this.$swal({
+          position: "center",
+          icon: "success",
+          title: "Clearance Application Successfully Created!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     },
     reset() {
@@ -492,7 +486,7 @@ export default {
       return fd;
     },
     searchCrimeCase() {
-      this.searchCase(this.search)
+      this.searchCase(this.search);
     },
     dateTimeFormat(date) {
       return new Date(date).toLocaleString("default", {

@@ -153,7 +153,7 @@
                     </v-col>
                   </v-row>
                   <v-row class="mt-0">
-                     <v-col cols="3">
+                    <v-col cols="3">
                       <v-text-field
                         v-model="clearance.phone"
                         :rules="requiredRules"
@@ -294,12 +294,25 @@
                 </v-container>
                 <v-container fluid>
                   <v-row align="center" justify="end">
-                    <v-checkbox
+                    <!-- <v-checkbox
                       v-model="clearance.verified"
                       :label="clearance.verified ? 'Verified' : 'Not Verified'"
                       required
-                    ></v-checkbox>
-                    <v-btn color="success" class="mr-4 ml-10" x-large @click="validate">
+                    ></v-checkbox> -->
+                    <v-btn
+                      :disabled="!valid"
+                      :color="clearance.verified ? 'error' : 'primary'"
+                      @click="clearance.verified = clearance.verified ? 0 : 1"
+                      x-large
+                    >
+                      {{ clearance.verified ? "Not Verified" : "Verified" }}
+                    </v-btn>
+                    <v-btn
+                      color="success"
+                      class="mr-4 ml-5"
+                      x-large
+                      @click="validate"
+                    >
                       Save Changes
                     </v-btn>
                   </v-row>
@@ -320,12 +333,7 @@
       {{ snackbarText }}
 
       <template v-slot:action="{ attrs }">
-        <v-btn
-          color="black"
-          text
-          v-bind="attrs"
-          @click="snackbar = false"
-        >
+        <v-btn color="black" text v-bind="attrs" @click="snackbar = false">
           Close
         </v-btn>
       </template>
@@ -338,7 +346,7 @@ import { createNamespacedHelpers } from "vuex";
 const { mapGetters, mapActions } = createNamespacedHelpers("navigation");
 
 export default {
-  data: () => ({ 
+  data: () => ({
     snackbar: false,
     snackbarText: "",
     birthDateMenu: null,
@@ -397,8 +405,9 @@ export default {
       const valid = this.$refs.form.validate();
       if (valid) {
         this.updateClearance(this.clearance);
-        this.snackbar = true
-        this.snackbarText = "Police Clearance Application Updated!"
+        this.snackbar = true;
+        this.snackbarText = "Police Clearance Application Updated!";
+        this.$router.replace({ name: "navigation.dashboard" });
       }
     },
     reset() {
@@ -427,7 +436,7 @@ export default {
       return fd;
     },
     searchCrimeCase() {
-      this.searchCase(this.search)
+      this.searchCase(this.search);
     },
     dateTimeFormat(date) {
       return new Date(date).toLocaleString("default", {
@@ -440,8 +449,8 @@ export default {
     },
   },
   created() {
-      this.clearance = this.currentClearance
-  }
+    this.clearance = this.currentClearance;
+  },
 };
 </script>
 
