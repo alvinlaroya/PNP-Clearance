@@ -436,14 +436,20 @@
             <v-row>
               <v-col cols="7">
                 <v-row>
-                  <v-col cols="6">
+                  <v-col cols="6" class="text-center">
                     <div>
+                      <span class="font-weight-bold">{{
+                        currentItem.pnco
+                      }}</span>
                       <hr />
                       <span>Duty Invest PNCO</span>
                     </div>
                   </v-col>
-                  <v-col cols="6">
+                  <v-col cols="6" class="text-center">
                     <div>
+                      <span class="font-weight-bold">{{
+                        currentItem.cop
+                      }}</span>
                       <hr />
                       <span>Chief of Police</span>
                     </div>
@@ -602,14 +608,20 @@
             <v-row>
               <v-col cols="7">
                 <v-row>
-                  <v-col cols="6">
+                  <v-col cols="6" class="text-center">
                     <div>
+                      <span class="font-weight-bold">{{
+                        currentItem.pnco
+                      }}</span>
                       <hr />
                       <span>Duty Invest PNCO</span>
                     </div>
                   </v-col>
-                  <v-col cols="6">
+                  <v-col cols="6" class="text-center">
                     <div>
+                      <span class="font-weight-bold">{{
+                        currentItem.cop
+                      }}</span>
                       <hr />
                       <span>Chief of Police</span>
                     </div>

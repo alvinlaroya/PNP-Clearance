@@ -74,6 +74,12 @@ module.exports = (sequelize, DataTypes) => {
     issuedOn: {
       type: DataTypes.DATE,
     },
+    pnco: {
+      type: DataTypes.STRING,
+    },
+    cop: {
+      type: DataTypes.STRING,
+    },
     cedula: {
       type: DataTypes.STRING,
     },
