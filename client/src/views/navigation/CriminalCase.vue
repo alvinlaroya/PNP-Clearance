@@ -172,8 +172,16 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="default" text @click="[editDialog = false, criminalCase = {}]"> Close </v-btn>
-          <v-btn color="success" text @click="editValidate"> Save Changes </v-btn>
+          <v-btn
+            color="default"
+            text
+            @click="[(editDialog = false), (criminalCase = {})]"
+          >
+            Close
+          </v-btn>
+          <v-btn color="success" text @click="editValidate">
+            Save Changes
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -187,12 +195,7 @@
       {{ snackbarText }}
 
       <template v-slot:action="{ attrs }">
-        <v-btn
-          color="black"
-          text
-          v-bind="attrs"
-          @click="snackbar = false"
-        >
+        <v-btn color="black" text v-bind="attrs" @click="snackbar = false">
           Close
         </v-btn>
       </template>
@@ -238,7 +241,7 @@ export default {
       { text: "First name", value: "fname" },
       { text: "Middle name", value: "mname" },
       { text: "Last name", value: "lname" },
-      { text: "Create at", value: "createdAt" },
+      { text: "Create on", value: "createdAt" },
     ],
     valid: true,
     validEdit: true,
@@ -261,8 +264,8 @@ export default {
   methods: {
     ...mapActions(["fetchCase", "addCase", "updateCase"]),
     editItem(item) {
-      this.currentCase = item
-      this.editDialog = true
+      this.currentCase = item;
+      this.editDialog = true;
     },
     downloadItem(item) {
       console.log(item);
@@ -291,18 +294,18 @@ export default {
       if (valid) {
         this.addCase(this.criminalCase);
         this.$refs.form.reset();
-        this.snackbar = true
-        this.snackbarText = "Criminal Case Created!"
-        this.dialog = false
+        this.snackbar = true;
+        this.snackbarText = "Criminal Case Created!";
+        this.dialog = false;
       }
     },
     editValidate() {
       const valid = this.$refs.editForm.validate();
       if (valid) {
         this.updateCase(this.currentCase);
-        this.snackbar = true
-        this.snackbarText = "Criminal Case Updated!"
-        this.editDialog = false
+        this.snackbar = true;
+        this.snackbarText = "Criminal Case Updated!";
+        this.editDialog = false;
       }
     },
   },

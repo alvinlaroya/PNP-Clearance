@@ -174,7 +174,7 @@
                         outlined
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="2">
+                    <v-col cols="3">
                       <v-text-field
                         v-model="clearance.ctcNumber"
                         :rules="requiredRules"
@@ -183,33 +183,7 @@
                         outlined
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="2">
-                      <v-menu
-                        v-model="issuedAtMenu"
-                        :close-on-content-click="true"
-                        :nudge-left="20"
-                        transition="scale-transition"
-                        offset-y
-                        min-width="auto"
-                      >
-                        <template v-slot:activator="{ on, attrs }">
-                          <v-text-field
-                            v-model="clearance.issuedAt"
-                            label="Issued At"
-                            prepend-inner-icon="mdi-calendar"
-                            readonly
-                            flat
-                            outlined
-                            v-bind="attrs"
-                            v-on="on"
-                          ></v-text-field>
-                        </template>
-                        <v-date-picker
-                          v-model="clearance.issuedAt"
-                        ></v-date-picker>
-                      </v-menu>
-                    </v-col>
-                    <v-col cols="2">
+                    <v-col cols="3">
                       <v-menu
                         v-model="issuedOnMenu"
                         :close-on-content-click="true"
