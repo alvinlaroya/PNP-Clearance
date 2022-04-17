@@ -166,6 +166,10 @@
     margin-bottom: -30px;
 }
 
+#printMe {
+  margin-top: -20px;
+}
+
 .validfortwo {
     color: black;
     font-weight: bold;
