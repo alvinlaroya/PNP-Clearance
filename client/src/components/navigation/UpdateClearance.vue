@@ -230,6 +230,30 @@
                       </v-btn>
                     </v-col>
                   </v-row>
+                  <v-row>
+                    <v-col cols="6">
+                      <v-text-field
+                        v-model="clearance.pnco"
+                        label="DUTY Invest PNCO"
+                        prepend-inner-icon="mdi-account"
+                        flat
+                        outlined
+                        v-bind="attrs"
+                        v-on="on"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="6">
+                      <v-text-field
+                        v-model="clearance.cop"
+                        label="Chief of Police"
+                        prepend-inner-icon="mdi-account"
+                        flat
+                        outlined
+                        v-bind="attrs"
+                        v-on="on"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
                 </v-container>
                 <v-container fluid style="margin-top: -15px">
                   <h2>Related Criminal Case</h2>
