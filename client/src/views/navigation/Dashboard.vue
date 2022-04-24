@@ -317,7 +317,7 @@
                   </tr>
                   <tr class="tr2">
                     <td>
-                      {{ getRegNo(currentItem.id, currentItem.issuedAt) }}
+                      {{ getRegNo(currentItem.id, currentItem.createdAt) }}
                     </td>
                     <td style="text-align: center">
                       {{
@@ -325,7 +325,7 @@
                       }}
                     </td>
                     <td style="text-align: center">
-                      {{ dateTimeFormat(currentItem.issuedAt) }}
+                      {{ dateTimeFormat(currentItem.createdAt) }}
                     </td>
                   </tr>
                 </table>
@@ -489,7 +489,7 @@
                   </tr>
                   <tr class="tr2">
                     <td>
-                      {{ getRegNo(currentItem.id, currentItem.issuedAt) }}
+                      {{ getRegNo(currentItem.id, currentItem.createdAt) }}
                     </td>
                     <td style="text-align: center">
                       {{
@@ -497,7 +497,7 @@
                       }}
                     </td>
                     <td style="text-align: center">
-                      {{ dateTimeFormat(currentItem.issuedAt) }}
+                      {{ dateTimeFormat(currentItem.createdAt) }}
                     </td>
                   </tr>
                 </table>

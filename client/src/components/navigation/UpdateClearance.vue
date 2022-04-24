@@ -210,26 +210,6 @@
                       </v-menu>
                     </v-col>
                   </v-row>
-                  <v-row class="mt-0">
-                    <v-col cols="5">
-                      <v-text-field
-                        v-model="search"
-                        label="Enter Applicant Name"
-                        outlined
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="2">
-                      <v-btn
-                        :disabled="!valid"
-                        color="primary"
-                        @click="searchCrimeCase"
-                        x-large
-                      >
-                        <v-icon left> mdi-magnify </v-icon>
-                        Search
-                      </v-btn>
-                    </v-col>
-                  </v-row>
                   <v-row>
                     <v-col cols="6">
                       <v-text-field
@@ -252,6 +232,26 @@
                         v-bind="attrs"
                         v-on="on"
                       ></v-text-field>
+                    </v-col>
+                  </v-row>
+                  <v-row class="mt-0">
+                    <v-col cols="5">
+                      <v-text-field
+                        v-model="search"
+                        label="Enter Applicant Name"
+                        outlined
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="2">
+                      <v-btn
+                        :disabled="!valid"
+                        color="primary"
+                        @click="searchCrimeCase"
+                        x-large
+                      >
+                        <v-icon left> mdi-magnify </v-icon>
+                        Search
+                      </v-btn>
                     </v-col>
                   </v-row>
                 </v-container>

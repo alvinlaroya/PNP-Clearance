@@ -90,7 +90,7 @@
                       <v-menu
                         v-model="birthDateMenu"
                         :close-on-content-click="true"
-                        :nudge-left="20"
+                        :nudge-left="90"
                         transition="scale-transition"
                         offset-y
                         min-width="auto"
