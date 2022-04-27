@@ -10,6 +10,8 @@ import Register from "@/views/auth/Register.vue";
 import Dashboard from "@/views/navigation/Dashboard.vue";
 import CriminalCase from "@/views/navigation/CriminalCase.vue";
 import UserManagement from "@/views/navigation/UserManagement.vue";
+import StatisticalReport from "@/views/navigation/StatisticalReport.vue";
+import ChiefOfPolice from "@/views/navigation/ChiefOfPolice.vue";
 
 // Forms
 import AddClearance from "@/components/navigation/AddClearance.vue";
@@ -142,6 +144,54 @@ const routes = [
     name: "navigation.user.management",
     components: {
       default: UserManagement,
+      navbar: Navbar,
+      sidebar: Sidebar,
+    },
+    beforeEnter(to, from, next) {
+      Auth.isAuthenticated()
+        .then((response) => {
+          if (response) {
+            next(); // If authenticated, proceed with the redirect
+          } else {
+            next({ name: "auth.login" });
+          }
+          /* console.log(response.data) */
+          next();
+        })
+        .catch(() => {
+          next({ name: "auth.login" });
+        });
+    },
+  },
+  {
+    path: "/statistical-report",
+    name: "navigation.statistical.report",
+    components: {
+      default: StatisticalReport,
+      navbar: Navbar,
+      sidebar: Sidebar,
+    },
+    beforeEnter(to, from, next) {
+      Auth.isAuthenticated()
+        .then((response) => {
+          if (response) {
+            next(); // If authenticated, proceed with the redirect
+          } else {
+            next({ name: "auth.login" });
+          }
+          /* console.log(response.data) */
+          next();
+        })
+        .catch(() => {
+          next({ name: "auth.login" });
+        });
+    },
+  },
+  {
+    path: "/chief-of-police",
+    name: "navigation.chief.police",
+    components: {
+      default: ChiefOfPolice,
       navbar: Navbar,
       sidebar: Sidebar,
     },

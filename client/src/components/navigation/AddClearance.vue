@@ -305,6 +305,7 @@
                               <th class="text-left">First Name</th>
                               <th class="text-left">Middle Name</th>
                               <th class="text-left">Last Name</th>
+                              <th class="text-left">Status</th>
                               <th class="text-left">Created At</th>
                             </tr>
                           </thead>
@@ -314,6 +315,7 @@
                               <td>{{ item.fname }}</td>
                               <td>{{ item.mname }}</td>
                               <td>{{ item.lname }}</td>
+                              <td>{{ item.status ? "Active" : "Pending" }}</td>
                               <td>{{ dateTimeFormat(item.createdAt) }}</td>
                             </tr>
                           </tbody>

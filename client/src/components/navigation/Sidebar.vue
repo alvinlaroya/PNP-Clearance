@@ -13,7 +13,7 @@
     <v-list color="#083596">
       <v-list-item dense>
         <v-list-item-content>
-          <v-list-item-title style="font-size: 19px;"
+          <v-list-item-title style="font-size: 19px"
             >Police Clearance System</v-list-item-title
           >
         </v-list-item-content>
@@ -29,7 +29,9 @@
           <v-list-item-title class="text-small">
             {{ currentUser.fname }} {{ currentUser.lname }}
           </v-list-item-title>
-          <v-list-item-subtitle class="text-small">{{ currentUser.position  }}</v-list-item-subtitle>
+          <v-list-item-subtitle class="text-small">{{
+            currentUser.position
+          }}</v-list-item-subtitle>
         </v-list-item-content>
 
         <v-menu
@@ -53,7 +55,11 @@
           <v-list dense>
             <v-subheader>Other Options</v-subheader>
             <v-list-item-group color="primary">
-              <v-list-item v-for="(item, i) in otherOptions" :key="i" @click="navMenuMethods(item.method)">
+              <v-list-item
+                v-for="(item, i) in otherOptions"
+                :key="i"
+                @click="navMenuMethods(item.method)"
+              >
                 <v-list-item-icon>
                   <v-icon v-text="item.icon" :color="item.iconColor"></v-icon>
                 </v-list-item-icon>
@@ -68,7 +74,9 @@
       <v-divider></v-divider>
       <v-list-item dense>
         <v-list-item-content class="text-center">
-          <v-list-item-title style="font-size: 16px">Sison, Pangasinan</v-list-item-title>
+          <v-list-item-title style="font-size: 16px"
+            >Sison, Pangasinan</v-list-item-title
+          >
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -105,7 +113,7 @@
 <script>
 import { EventBus } from "@/main.js";
 import { createNamespacedHelpers } from "vuex";
-const { mapGetters, mapActions} = createNamespacedHelpers("auth");
+const { mapGetters, mapActions } = createNamespacedHelpers("auth");
 
 export default {
   data: () => ({
@@ -115,37 +123,64 @@ export default {
       {
         subheader: "Navigation",
         subheaderList: [
-          { text: "Police Clearance", icon: "mdi-view-dashboard-outline", path: "/dashboard" },
-          { text: "Criminal Case", icon: "mdi-briefcase-account-outline", path: "/case" },
-          { text: "User Management", icon: "mdi-account-cog-outline", path: "/management" },
+          {
+            text: "Police Clearance",
+            icon: "mdi-view-dashboard-outline",
+            path: "/dashboard",
+          },
+          {
+            text: "Criminal Case",
+            icon: "mdi-briefcase-account-outline",
+            path: "/case",
+          },
+          {
+            text: "User Management",
+            icon: "mdi-account-cog-outline",
+            path: "/management",
+          },
+          {
+            text: "Statistical Report",
+            icon: "mdi-chart-line",
+            path: "/statistical-report",
+          },
+          {
+            text: "Chief of Police",
+            icon: "mdi-account-group-outline",
+            path: "/chief-of-police",
+          },
         ],
       },
     ],
     otherOptions: [
-      { text: "Sign Out", icon: "mdi-logout-variant", iconColor: "red", method: "logout"},
+      {
+        text: "Sign Out",
+        icon: "mdi-logout-variant",
+        iconColor: "red",
+        method: "logout",
+      },
     ],
   }),
   methods: {
     ...mapActions(["logOutUser"]),
     navMenuMethods(method) {
-      switch(method) {
+      switch (method) {
         case "logout":
-            this.logOutUser()
-            break
+          this.logOutUser();
+          break;
         default:
-          return null
+          return null;
       }
-    }
+    },
   },
   computed: {
-    ...mapGetters(["currentUser"])
+    ...mapGetters(["currentUser"]),
   },
   created() {
     EventBus.$on("switch-mini", () => {
-      var element = document.querySelector('#sidebar');
+      var element = document.querySelector("#sidebar");
       element.style.transitionDuration = "0.1s";
       this.mini = !this.mini;
-      element.style.left = !this.mini ? '0px' : '-55px';
+      element.style.left = !this.mini ? "0px" : "-55px";
     });
   },
 };
