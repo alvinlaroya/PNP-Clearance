@@ -42,6 +42,9 @@
                 mdi-file-document-edit
               </v-icon>
             </template>
+            <template v-slot:item.status="{ item }">
+              {{ item.status ? "Active" : "Pending" }}
+            </template>
             <template v-slot:item.createdAt="{ item }">
               {{ dateTimeFormat(item.createdAt) }}
             </template>
@@ -60,6 +63,16 @@
         <v-card-text>
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-container>
+              <v-row class="mt-0">
+                <v-col cols="12">
+                  <v-switch
+                    v-model="criminalCase.status"
+                    :label="
+                      criminalCase.status ? 'Active Case' : 'Pending Case'
+                    "
+                  ></v-switch>
+                </v-col>
+              </v-row>
               <v-row>
                 <v-col cols="12">
                   <v-text-field
@@ -118,18 +131,26 @@
 
       <v-card>
         <v-card-title class="text-h5 grey lighten-2">
-          Add Criminal Case
+          Update Criminal Cases
         </v-card-title>
 
         <v-card-text>
           <v-form ref="editForm" v-model="validEdit" lazy-validation>
             <v-container>
-              <v-row>
+              <v-row class="mt-0">
+                <v-col cols="12">
+                  <v-switch
+                    v-model="currentCase.status"
+                    :label="currentCase.status ? 'Active Case' : 'Pending Case'"
+                  ></v-switch>
+                </v-col>
+              </v-row>
+              <v-row class="mt-0">
                 <v-col cols="12">
                   <v-text-field
                     v-model="currentCase.serialNo"
                     :rules="requiredRules"
-                    label="Serial No"
+                    label="Serial Nos"
                     required
                     outlined
                   ></v-text-field>
@@ -224,6 +245,7 @@ export default {
       fname: "",
       mname: "",
       lname: "",
+      status: 0,
     },
     currentCase: {},
     headers: [
@@ -241,6 +263,7 @@ export default {
       { text: "First name", value: "fname" },
       { text: "Middle name", value: "mname" },
       { text: "Last name", value: "lname" },
+      { text: "Status", value: "status" },
       { text: "Create on", value: "createdAt" },
     ],
     valid: true,
