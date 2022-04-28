@@ -66,4 +66,32 @@ export default {
       }
     );
   },
+
+  async getClearanceIssuedStatisticReportEvent() {
+    return await axios.get(
+      `${apiUrl}/clearance/getClearanceIssuedStatisticalReport`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+      }
+    );
+  },
+
+  async getClearanceIncomeStatisticReportEvent() {
+    return await axios.get(
+      `${apiUrl}/clearance/getClearanceIncomeStatisticalReport`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+      }
+    );
+  },
 };

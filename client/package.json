@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.25.0",
     "core-js": "^3.6.5",
+    "frappe-charts": "^1.6.2",
     "vue": "^2.6.11",
     "vue-pdf": "^4.3.0",
     "vue-print-nb": "^1.7.5",

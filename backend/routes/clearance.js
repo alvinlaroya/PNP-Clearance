@@ -16,6 +16,14 @@ router.get(
 router.put("/updateClearance/:id", clearance.updateClearance);
 router.put("/approveClearance/:id", clearance.approveClearance);
 router.delete("/deleteClearance", clearance.deleteClearance);
+router.get(
+  "/getClearanceIssuedStatisticalReport",
+  clearance.clearanceIssuedStatisticalReport
+);
+router.get(
+  "/getClearanceIncomeStatisticalReport",
+  clearance.clearanceIncomeStatisticalReport
+);
 
 function middleware(req, res, next) {
   const authHeader = req.headers["authorization"];

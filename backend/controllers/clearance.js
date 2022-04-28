@@ -1,5 +1,7 @@
 const { Sequelize } = require("sequelize");
 require("dotenv").config();
+var moment = require("moment"); // require
+moment().format();
 const Vonage = require("@vonage/server-sdk");
 const vonage = new Vonage({
   apiKey: process.env.VONAGE_API_KEY,
@@ -9,6 +11,9 @@ const Op = Sequelize.Op;
 const db = require("../models");
 const multer = require("multer");
 const path = require("path");
+
+// Weekly helpers
+const weeklyHelpers = require("../helpers/getWeekly.js");
 
 // MODEL
 const Clearance = db.clearances;
@@ -224,6 +229,579 @@ const deleteClearance = async (req, res) => {
   res.sendStatus(200);
 };
 
+// Statistical Report
+const clearanceIssuedStatisticalReport = async (req, res) => {
+  // Daily
+  const daily = await Clearance.count({
+    where: {
+      issued: 1,
+      createdAt: {
+        [Op.gte]: moment().toDate(),
+      },
+    },
+  });
+
+  // Weekly
+  const everySunday = await Clearance.count({
+    where: {
+      issued: 1,
+      createdAt: {
+        [Op.gt]: weeklyHelpers.firstday().firstdaystart,
+        [Op.lt]: weeklyHelpers.firstday().firstdayend,
+      },
+    },
+  });
+
+  const everyMonday = await Clearance.count({
+    where: {
+      issued: 1,
+      createdAt: {
+        [Op.gt]: weeklyHelpers.secondday().seconddaystart,
+        [Op.lt]: weeklyHelpers.secondday().seconddayend,
+      },
+    },
+  });
+
+  const everyTuesday = await Clearance.count({
+    where: {
+      issued: 1,
+      createdAt: {
+        [Op.gt]: weeklyHelpers.thirdday().thirddaystart,
+        [Op.lt]: weeklyHelpers.thirdday().thirddayend,
+      },
+    },
+  });
+
+  const everyWednesday = await Clearance.count({
+    where: {
+      issued: 1,
+      createdAt: {
+        [Op.gt]: weeklyHelpers.fourthday().fourthdaystart,
+        [Op.lt]: weeklyHelpers.fourthday().fourthdayend,
+      },
+    },
+  });
+
+  const everyThursday = await Clearance.count({
+    where: {
+      issued: 1,
+      createdAt: {
+        [Op.gt]: weeklyHelpers.fifthday().fifthdaystart,
+        [Op.lt]: weeklyHelpers.fifthday().fifthdayend,
+      },
+    },
+  });
+
+  const everyFriday = await Clearance.count({
+    where: {
+      issued: 1,
+      createdAt: {
+        [Op.gt]: weeklyHelpers.sixthday().sixthdaystart,
+        [Op.lt]: weeklyHelpers.sixthday().sixthdayend,
+      },
+    },
+  });
+
+  const everySaturday = await Clearance.count({
+    where: {
+      issued: 1,
+      createdAt: {
+        [Op.gt]: weeklyHelpers.seventhday().seventhdaystart,
+        [Op.lt]: weeklyHelpers.seventhday().seventhdayend,
+      },
+    },
+  });
+
+  // Monthly
+  const jan = await Clearance.count({
+    where: {
+      [Op.and]: [
+        Sequelize.where(Sequelize.fn("MONTH", Sequelize.col("createdAt")), 1),
+        Sequelize.where(
+          Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+          new Date().getFullYear()
+        ),
+      ],
+    },
+  });
+  const feb = await Clearance.count({
+    where: {
+      [Op.and]: [
+        Sequelize.where(Sequelize.fn("MONTH", Sequelize.col("createdAt")), 2),
+        Sequelize.where(
+          Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+          new Date().getFullYear()
+        ),
+      ],
+    },
+  });
+  const march = await Clearance.count({
+    where: {
+      [Op.and]: [
+        Sequelize.where(Sequelize.fn("MONTH", Sequelize.col("createdAt")), 3),
+        Sequelize.where(
+          Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+          new Date().getFullYear()
+        ),
+      ],
+    },
+  });
+  const april = await Clearance.count({
+    where: {
+      [Op.and]: [
+        Sequelize.where(Sequelize.fn("MONTH", Sequelize.col("createdAt")), 4),
+        Sequelize.where(
+          Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+          new Date().getFullYear()
+        ),
+      ],
+    },
+  });
+  const may = await Clearance.count({
+    where: {
+      [Op.and]: [
+        Sequelize.where(Sequelize.fn("MONTH", Sequelize.col("createdAt")), 5),
+        Sequelize.where(
+          Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+          new Date().getFullYear()
+        ),
+      ],
+    },
+  });
+  const june = await Clearance.count({
+    where: {
+      [Op.and]: [
+        Sequelize.where(Sequelize.fn("MONTH", Sequelize.col("createdAt")), 6),
+        Sequelize.where(
+          Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+          new Date().getFullYear()
+        ),
+      ],
+    },
+  });
+  const july = await Clearance.count({
+    where: {
+      [Op.and]: [
+        Sequelize.where(Sequelize.fn("MONTH", Sequelize.col("createdAt")), 7),
+        Sequelize.where(
+          Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+          new Date().getFullYear()
+        ),
+      ],
+    },
+  });
+  const aug = await Clearance.count({
+    where: {
+      [Op.and]: [
+        Sequelize.where(Sequelize.fn("MONTH", Sequelize.col("createdAt")), 8),
+        Sequelize.where(
+          Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+          new Date().getFullYear()
+        ),
+      ],
+    },
+  });
+  const sep = await Clearance.count({
+    where: {
+      [Op.and]: [
+        Sequelize.where(Sequelize.fn("MONTH", Sequelize.col("createdAt")), 9),
+        Sequelize.where(
+          Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+          new Date().getFullYear()
+        ),
+      ],
+    },
+  });
+  const oct = await Clearance.count({
+    where: {
+      [Op.and]: [
+        Sequelize.where(Sequelize.fn("MONTH", Sequelize.col("createdAt")), 10),
+        Sequelize.where(
+          Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+          new Date().getFullYear()
+        ),
+      ],
+    },
+  });
+  const nov = await Clearance.count({
+    where: {
+      [Op.and]: [
+        Sequelize.where(Sequelize.fn("MONTH", Sequelize.col("createdAt")), 11),
+        Sequelize.where(
+          Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+          new Date().getFullYear()
+        ),
+      ],
+    },
+  });
+  const dec = await Clearance.count({
+    where: {
+      [Op.and]: [
+        Sequelize.where(Sequelize.fn("MONTH", Sequelize.col("createdAt")), 12),
+        Sequelize.where(
+          Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+          new Date().getFullYear()
+        ),
+      ],
+    },
+  });
+
+  /* const quarterly = await Clearance.count(); */
+
+  res.header("Access-Control-Allow-Origin", "*");
+  res.json({
+    message: "success",
+    daily,
+    weekly: [
+      { label: "Sunday", count: everySunday },
+      { label: "Monday", count: everyMonday },
+      { label: "Tuesday", count: everyTuesday },
+      { label: "Wednesday", count: everyWednesday },
+      { label: "Thursday", count: everyThursday },
+      { label: "Friday", count: everyFriday },
+      { label: "Saturday", count: everySaturday },
+    ],
+    monthly: [
+      { label: "January", value: 1, count: jan },
+      { label: "February", value: 2, count: feb },
+      { label: "March", value: 3, count: march },
+      { label: "April", value: 4, count: april },
+      { label: "May", value: 5, count: may },
+      { label: "June", value: 6, count: june },
+      { label: "July", value: 7, count: july },
+      { label: "August", value: 8, count: aug },
+      { label: "September", value: 9, count: sep },
+      { label: "October", value: 9, count: oct },
+      { label: "November", value: 9, count: nov },
+      { label: "December", value: 9, count: dec },
+    ],
+    quarterly: [
+      {
+        label: "1st Quarter",
+        count: jan + feb + march,
+      },
+      {
+        label: "2nd Quarter",
+        count: april + may + june,
+      },
+      {
+        label: "3rd Quarter",
+        count: july + aug + sep,
+      },
+      {
+        label: "4th Quarter",
+        count: oct + nov + dec,
+      },
+    ],
+  });
+};
+
+const clearanceIncomeStatisticalReport = async (req, res) => {
+  // Daily
+  const daily = await Clearance.findAll({
+    where: {
+      issued: 1,
+      createdAt: {
+        [Op.gte]: moment().toDate(),
+      },
+    },
+    attributes: [[Sequelize.fn("sum", Sequelize.col("amount")), "total"]],
+    raw: true,
+  });
+
+  // Weekly
+  const everySunday = await Clearance.findAll({
+    where: {
+      issued: 1,
+      createdAt: {
+        [Op.gt]: weeklyHelpers.firstday().firstdaystart,
+        [Op.lt]: weeklyHelpers.firstday().firstdayend,
+      },
+    },
+    attributes: [[Sequelize.fn("sum", Sequelize.col("amount")), "total"]],
+    raw: true,
+  });
+
+  const everyMonday = await Clearance.findAll({
+    where: {
+      issued: 1,
+      createdAt: {
+        [Op.gt]: weeklyHelpers.secondday().seconddaystart,
+        [Op.lt]: weeklyHelpers.secondday().seconddayend,
+      },
+    },
+    attributes: [[Sequelize.fn("sum", Sequelize.col("amount")), "total"]],
+    raw: true,
+  });
+
+  const everyTuesday = await Clearance.findAll({
+    where: {
+      issued: 1,
+      createdAt: {
+        [Op.gt]: weeklyHelpers.thirdday().thirddaystart,
+        [Op.lt]: weeklyHelpers.thirdday().thirddayend,
+      },
+    },
+    attributes: [[Sequelize.fn("sum", Sequelize.col("amount")), "total"]],
+    raw: true,
+  });
+
+  const everyWednesday = await Clearance.findAll({
+    where: {
+      issued: 1,
+      createdAt: {
+        [Op.gt]: weeklyHelpers.fourthday().fourthdaystart,
+        [Op.lt]: weeklyHelpers.fourthday().fourthdayend,
+      },
+    },
+    attributes: [[Sequelize.fn("sum", Sequelize.col("amount")), "total"]],
+    raw: true,
+  });
+
+  const everyThursday = await Clearance.findAll({
+    where: {
+      issued: 1,
+      createdAt: {
+        [Op.gt]: weeklyHelpers.fifthday().fifthdaystart,
+        [Op.lt]: weeklyHelpers.fifthday().fifthdayend,
+      },
+    },
+    attributes: [[Sequelize.fn("sum", Sequelize.col("amount")), "total"]],
+    raw: true,
+  });
+
+  const everyFriday = await Clearance.findAll({
+    where: {
+      issued: 1,
+      createdAt: {
+        [Op.gt]: weeklyHelpers.sixthday().sixthdaystart,
+        [Op.lt]: weeklyHelpers.sixthday().sixthdayend,
+      },
+    },
+    attributes: [[Sequelize.fn("sum", Sequelize.col("amount")), "total"]],
+    raw: true,
+  });
+
+  const everySaturday = await Clearance.findAll({
+    where: {
+      issued: 1,
+      createdAt: {
+        [Op.gt]: weeklyHelpers.seventhday().seventhdaystart,
+        [Op.lt]: weeklyHelpers.seventhday().seventhdayend,
+      },
+    },
+    attributes: [[Sequelize.fn("sum", Sequelize.col("amount")), "total"]],
+    raw: true,
+  });
+
+  // Monthly
+  const jan = await Clearance.findAll({
+    where: {
+      [Op.and]: [
+        Sequelize.where(Sequelize.fn("MONTH", Sequelize.col("createdAt")), 1),
+        Sequelize.where(
+          Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+          new Date().getFullYear()
+        ),
+      ],
+    },
+    attributes: [[Sequelize.fn("sum", Sequelize.col("amount")), "total"]],
+    raw: true,
+  });
+  const feb = await Clearance.findAll({
+    where: {
+      [Op.and]: [
+        Sequelize.where(Sequelize.fn("MONTH", Sequelize.col("createdAt")), 2),
+        Sequelize.where(
+          Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+          new Date().getFullYear()
+        ),
+      ],
+    },
+    attributes: [[Sequelize.fn("sum", Sequelize.col("amount")), "total"]],
+    raw: true,
+  });
+  const march = await Clearance.findAll({
+    where: {
+      [Op.and]: [
+        Sequelize.where(Sequelize.fn("MONTH", Sequelize.col("createdAt")), 3),
+        Sequelize.where(
+          Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+          new Date().getFullYear()
+        ),
+      ],
+    },
+    attributes: [[Sequelize.fn("sum", Sequelize.col("amount")), "total"]],
+    raw: true,
+  });
+  const april = await Clearance.findAll({
+    where: {
+      [Op.and]: [
+        Sequelize.where(Sequelize.fn("MONTH", Sequelize.col("createdAt")), 4),
+        Sequelize.where(
+          Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+          new Date().getFullYear()
+        ),
+      ],
+    },
+    attributes: [[Sequelize.fn("sum", Sequelize.col("amount")), "total"]],
+    raw: true,
+  });
+  const may = await Clearance.findAll({
+    where: {
+      [Op.and]: [
+        Sequelize.where(Sequelize.fn("MONTH", Sequelize.col("createdAt")), 5),
+        Sequelize.where(
+          Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+          new Date().getFullYear()
+        ),
+      ],
+    },
+    attributes: [[Sequelize.fn("sum", Sequelize.col("amount")), "total"]],
+    raw: true,
+  });
+  const june = await Clearance.findAll({
+    where: {
+      [Op.and]: [
+        Sequelize.where(Sequelize.fn("MONTH", Sequelize.col("createdAt")), 6),
+        Sequelize.where(
+          Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+          new Date().getFullYear()
+        ),
+      ],
+    },
+    attributes: [[Sequelize.fn("sum", Sequelize.col("amount")), "total"]],
+    raw: true,
+  });
+  const july = await Clearance.findAll({
+    where: {
+      [Op.and]: [
+        Sequelize.where(Sequelize.fn("MONTH", Sequelize.col("createdAt")), 7),
+        Sequelize.where(
+          Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+          new Date().getFullYear()
+        ),
+      ],
+    },
+    attributes: [[Sequelize.fn("sum", Sequelize.col("amount")), "total"]],
+    raw: true,
+  });
+  const aug = await Clearance.findAll({
+    where: {
+      [Op.and]: [
+        Sequelize.where(Sequelize.fn("MONTH", Sequelize.col("createdAt")), 8),
+        Sequelize.where(
+          Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+          new Date().getFullYear()
+        ),
+      ],
+    },
+    attributes: [[Sequelize.fn("sum", Sequelize.col("amount")), "total"]],
+    raw: true,
+  });
+  const sep = await Clearance.findAll({
+    where: {
+      [Op.and]: [
+        Sequelize.where(Sequelize.fn("MONTH", Sequelize.col("createdAt")), 9),
+        Sequelize.where(
+          Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+          new Date().getFullYear()
+        ),
+      ],
+    },
+    attributes: [[Sequelize.fn("sum", Sequelize.col("amount")), "total"]],
+    raw: true,
+  });
+  const oct = await Clearance.findAll({
+    where: {
+      [Op.and]: [
+        Sequelize.where(Sequelize.fn("MONTH", Sequelize.col("createdAt")), 10),
+        Sequelize.where(
+          Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+          new Date().getFullYear()
+        ),
+      ],
+    },
+    attributes: [[Sequelize.fn("sum", Sequelize.col("amount")), "total"]],
+    raw: true,
+  });
+  const nov = await Clearance.findAll({
+    where: {
+      [Op.and]: [
+        Sequelize.where(Sequelize.fn("MONTH", Sequelize.col("createdAt")), 11),
+        Sequelize.where(
+          Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+          new Date().getFullYear()
+        ),
+      ],
+    },
+    attributes: [[Sequelize.fn("sum", Sequelize.col("amount")), "total"]],
+    raw: true,
+  });
+  const dec = await Clearance.findAll({
+    where: {
+      [Op.and]: [
+        Sequelize.where(Sequelize.fn("MONTH", Sequelize.col("createdAt")), 12),
+        Sequelize.where(
+          Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+          new Date().getFullYear()
+        ),
+      ],
+    },
+    attributes: [[Sequelize.fn("sum", Sequelize.col("amount")), "total"]],
+    raw: true,
+  });
+
+  /* const quarterly = await Clearance.count(); */
+
+  res.header("Access-Control-Allow-Origin", "*");
+  res.json({
+    message: "success",
+    daily: Number(daily[0].total),
+    weekly: [
+      { label: "Sunday", count: Number(everySunday[0].total) },
+      { label: "Monday", count: Number(everyMonday[0].total) },
+      { label: "Tuesday", count: Number(everyTuesday[0].total) },
+      { label: "Wednesday", count: Number(everyWednesday[0].total) },
+      { label: "Thursday", count: Number(everyThursday[0].total) },
+      { label: "Friday", count: Number(everyFriday[0].total) },
+      { label: "Saturday", count: Number(everySaturday[0].total) },
+    ],
+    monthly: [
+      { label: "January", value: 1, count: Number(jan[0].total) },
+      { label: "February", value: 2, count: Number(feb[0].total) },
+      { label: "March", value: 3, count: Number(march[0].total) },
+      { label: "April", value: 4, count: Number(april[0].total) },
+      { label: "May", value: 5, count: Number(may[0].total) },
+      { label: "June", value: 6, count: Number(june[0].total) },
+      { label: "July", value: 7, count: Number(july[0].total) },
+      { label: "August", value: 8, count: Number(aug[0].total) },
+      { label: "September", value: 9, count: Number(sep[0].total) },
+      { label: "October", value: 9, count: Number(oct[0].total) },
+      { label: "November", value: 9, count: Number(nov[0].total) },
+      { label: "December", value: 9, count: Number(dec[0].total) },
+    ],
+    quarterly: [
+      {
+        label: "1st Quarter",
+        count: jan + feb + march,
+      },
+      {
+        label: "2nd Quarter",
+        count: april + may + june,
+      },
+      {
+        label: "3rd Quarter",
+        count: july + aug + sep,
+      },
+      {
+        label: "4th Quarter",
+        count: oct + nov + dec,
+      },
+    ],
+  });
+};
+
 module.exports = {
   addClearance,
   getAllClearances,
@@ -232,4 +810,6 @@ module.exports = {
   approveClearance,
   deleteClearance,
   upload,
+  clearanceIssuedStatisticalReport,
+  clearanceIncomeStatisticalReport,
 };
