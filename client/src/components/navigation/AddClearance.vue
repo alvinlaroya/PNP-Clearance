@@ -249,18 +249,7 @@
                     </v-col>
                   </v-row>
                   <v-row>
-                    <v-col cols="6">
-                      <v-text-field
-                        v-model="clearance.pnco"
-                        label="DUTY Invest PNCO"
-                        prepend-inner-icon="mdi-account"
-                        flat
-                        outlined
-                        v-bind="attrs"
-                        v-on="on"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="6">
+                    <v-col cols="12">
                       <v-text-field
                         v-model="clearance.cop"
                         label="Chief of Police"

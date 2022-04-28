@@ -439,7 +439,7 @@
                   <v-col cols="6" class="text-center">
                     <div>
                       <span class="font-weight-bold">{{
-                        currentItem.pnco
+                        `${currentUser.fname} ${currentUser.lname}`
                       }}</span>
                       <hr />
                       <span>Duty Invest PNCO</span>
@@ -611,7 +611,7 @@
                   <v-col cols="6" class="text-center">
                     <div>
                       <span class="font-weight-bold">{{
-                        currentItem.pnco
+                        `${currentUser.fname} ${currentUser.lname}`
                       }}</span>
                       <hr />
                       <span>Duty Invest PNCO</span>
@@ -666,7 +666,9 @@
 
 <script>
 import { createNamespacedHelpers } from "vuex";
-const { mapGetters, mapActions } = createNamespacedHelpers("navigation");
+const { mapGetters: mapGettersAuth } = createNamespacedHelpers("auth");
+const { mapGetters: mapGettersNavigation, mapActions: mapActionsNavigation } =
+  createNamespacedHelpers("navigation");
 
 export default {
   data: () => ({
@@ -730,7 +732,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions([
+    ...mapActionsNavigation([
       "fetchClearance",
       "setCurrentClearance",
       "approveClearanceAction",
@@ -818,7 +820,8 @@ export default {
     },
   },
   computed: {
-    ...mapGetters([
+    ...mapGettersAuth(["currentUser"]),
+    ...mapGettersNavigation([
       "allClearance",
       "verifiedClearance",
       "badges",

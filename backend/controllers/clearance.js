@@ -236,7 +236,8 @@ const clearanceIssuedStatisticalReport = async (req, res) => {
     where: {
       issued: 1,
       createdAt: {
-        [Op.gte]: moment().toDate(),
+        [Op.gt]: new Date().setHours(0, 0, 0),
+        [Op.lt]: new Date().setHours(23, 59, 59),
       },
     },
   });
@@ -784,19 +785,22 @@ const clearanceIncomeStatisticalReport = async (req, res) => {
     quarterly: [
       {
         label: "1st Quarter",
-        count: jan + feb + march,
+        count:
+          Number(jan[0].total) + Number(feb[0].total) + Number(march[0].total),
       },
       {
         label: "2nd Quarter",
-        count: april + may + june,
+        count:
+          Number(april[0].total) + Number(may[0].total) + Number(june[0].total),
       },
       {
         label: "3rd Quarter",
-        count: july + aug + sep,
+        count:
+          Number(july[0].total) + Number(aug[0].total) + Number(sep[0].total),
       },
       {
         label: "4th Quarter",
-        count: oct + nov + dec,
+        count: Number(oct[0].total) + Number(nov[0].total) + Number([0].total),
       },
     ],
   });
