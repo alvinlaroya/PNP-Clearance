@@ -9,7 +9,7 @@
       <v-col cols="6">
         <v-card>
           <v-card-text>
-            <v-card-title> Total Clearance Issued </v-card-title><br />
+            <v-card-title> Daily Clearance Issued </v-card-title><br />
             <span class="ml-4" style="font-size: 60px">{{
               clearanceIssued.daily
             }}</span>
@@ -29,7 +29,7 @@
       <v-col cols="6">
         <v-card>
           <v-card-text>
-            <v-card-title> Total Clearance Income </v-card-title><br />
+            <v-card-title> Daily Clearance Income </v-card-title><br />
             <span class="ml-4" style="font-size: 60px"
               >₱{{ clearanceIncome.daily }}</span
             >
