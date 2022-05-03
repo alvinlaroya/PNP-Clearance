@@ -4,9 +4,9 @@
       <v-col cols="6">
         <v-card>
           <v-card-text>
-            <v-card-title> Total Clearance Application </v-card-title><br />
+            <v-card-title> Total Clearance Pending </v-card-title><br />
             <span class="ml-4" style="font-size: 60px">{{
-              allClearance.length
+              pendingClearance.length
             }}</span>
             <v-icon
               x-large
@@ -26,7 +26,7 @@
           <v-card-text>
             <v-card-title> Total Clearance Issued </v-card-title><br />
             <span class="ml-4" style="font-size: 60px">{{
-              issuedClearanceCount
+              issuedClearance.length
             }}</span>
             <v-icon
               x-large
@@ -90,7 +90,7 @@
               <v-data-table
                 :search="search"
                 :headers="headers"
-                :items="allClearance"
+                :items="pendingClearance"
                 show-expand
                 single-expand
                 loading-text="Loading... Please wait"
@@ -176,7 +176,7 @@
               <v-data-table
                 :search="search"
                 :headers="headers"
-                :items="verifiedClearance"
+                :items="issuedClearance"
                 show-expand
                 single-expand
                 loading-text="Loading... Please wait"
@@ -184,13 +184,13 @@
                 class="elevation-1"
               >
                 <template v-slot:item.actions="{ item }">
-                  <v-icon
+                  <!-- <v-icon
                     class="mr-2"
                     color="green"
                     @click="approveClearance(item)"
                   >
                     mdi-file-check-outline
-                  </v-icon>
+                  </v-icon> -->
                   <v-icon class="mr-2" color="green" @click="editItem(item)">
                     mdi-file-document-edit
                   </v-icon>
@@ -679,8 +679,8 @@ export default {
     search: "",
     tab: null,
     items: [
-      { label: "All", count: 0 },
-      { label: "Verified", count: 0 },
+      { label: "Pending", count: 0 },
+      { label: "Issued", count: 0 },
     ],
     headers: [
       {
@@ -736,7 +736,6 @@ export default {
       "fetchClearance",
       "setCurrentClearance",
       "approveClearanceAction",
-      "fetchIssuedClearance",
     ]),
     viewItem(item) {
       this.currentItem = item;
@@ -822,8 +821,8 @@ export default {
   computed: {
     ...mapGettersAuth(["currentUser"]),
     ...mapGettersNavigation([
-      "allClearance",
-      "verifiedClearance",
+      "pendingClearance",
+      "issuedClearance",
       "badges",
       "issuedClearanceCount",
     ]),
@@ -833,7 +832,6 @@ export default {
   },
   mounted() {
     this.fetchClearance();
-    this.fetchIssuedClearance();
   },
 };
 </script>

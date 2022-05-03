@@ -15,6 +15,17 @@ export default {
     });
   },
 
+  async getAllPendingClearanceEvent() {
+    return await axios.get(`${apiUrl}/clearance/getPendingClearances`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      },
+    });
+  },
+
   async getAllIssuedClearanceEvent() {
     return await axios.get(`${apiUrl}/clearance/getIssuedClearances`, {
       headers: {

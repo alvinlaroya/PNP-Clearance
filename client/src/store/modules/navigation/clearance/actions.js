@@ -5,21 +5,9 @@ export const fetchClearance = ({ commit }) => {
   EventService.getClearanceEvent()
     .then((response) => {
       commit(types.SET_CLEARANCE_BADGE, response.data);
-      commit(types.SET_ALL_CLEARANCE, response.data.allClearance.rows);
-      commit(
-        types.SET_VERIFIED_CLEARANCE,
-        response.data.verifiedClearance.rows
-      );
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
-
-export const fetchIssuedClearance = ({ commit }) => {
-  EventService.getAllIssuedClearanceEvent()
-    .then((response) => {
-      commit(types.SET_ISSUED_CLEARANCE_COUNT, response.data);
+      /* commit(types.SET_ALL_CLEARANCE, response.data.allClearance.rows); */
+      commit(types.SET_PENDING_CLEARANCE, response.data.pendingClearances.rows);
+      commit(types.SET_ISSUED_CLEARANCE, response.data.issuedClearances.rows);
     })
     .catch((error) => {
       console.log(error);
@@ -37,10 +25,10 @@ export const addClearance = ({ commit }, payload) => {
     });
 };
 
-export const approveClearanceAction = (_, payload) => {
+export const approveClearanceAction = ({ commit }, payload) => {
   EventService.approveClearanceEvent(payload)
     .then((response) => {
-      console.log(response);
+      commit(types.SET_APPROVED_CLEARANCE, payload);
     })
     .catch((error) => {
       console.log(error);

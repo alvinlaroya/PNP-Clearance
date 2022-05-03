@@ -1,4 +1,6 @@
 export const allClearance = (state) => state.allClearance;
+export const pendingClearance = (state) => state.pendingClearance;
+export const issuedClearance = (state) => state.issuedClearance;
 export const verifiedClearance = (state) => state.verifiedClearance;
 export const badges = (state) => ({
   all: state.badges.all,

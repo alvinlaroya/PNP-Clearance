@@ -139,9 +139,16 @@ const getAllClearances = async (req, res) => {
     order: [["createdAt", "DESC"]],
   });
 
-  let verifiedClearances = await Clearance.findAndCountAll({
+  let pendingClearances = await Clearance.findAndCountAll({
     where: {
-      verified: true,
+      issued: false,
+    },
+    order: [["createdAt", "DESC"]],
+  });
+
+  let issuedClearances = await Clearance.findAndCountAll({
+    where: {
+      issued: true,
     },
     order: [["createdAt", "DESC"]],
   });
@@ -150,7 +157,8 @@ const getAllClearances = async (req, res) => {
   res.json({
     message: "success",
     allClearance: clearances,
-    verifiedClearance: verifiedClearances,
+    pendingClearances: pendingClearances,
+    issuedClearances: issuedClearances,
   });
 };
 

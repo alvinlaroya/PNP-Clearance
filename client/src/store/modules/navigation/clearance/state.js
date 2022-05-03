@@ -1,10 +1,11 @@
 export default {
   allClearance: [],
   currentClearance: {},
-  verifiedClearance: [],
+  pendingClearance: [],
+  issuedClearance: [],
   issuedClearanceCount: 0,
   badges: {
-    all: 0,
-    verified: 0,
+    all: 0, // pending
+    verified: 0, // issued
   },
 };
