@@ -511,7 +511,8 @@ const clearanceIncomeStatisticalReport = async (req, res) => {
     where: {
       issued: 1,
       createdAt: {
-        [Op.gte]: moment().toDate(),
+        [Op.gte]: new Date().setHours(0, 0, 0),
+        [Op.lte]: moment().toDate(),
       },
     },
     attributes: [[Sequelize.fn("sum", Sequelize.col("amount")), "total"]],
