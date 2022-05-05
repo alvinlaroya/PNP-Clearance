@@ -112,7 +112,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="default" text @click="dialog = false"> Close </v-btn>
-          <v-btn color="success" text @click="validate"> Save case </v-btn>
+          <v-btn color="success" text @click="validate"> Save </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
