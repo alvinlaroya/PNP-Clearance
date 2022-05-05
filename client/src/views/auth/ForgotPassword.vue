@@ -7,6 +7,10 @@
           <span class="font-weight-bold" style="font-size: 21px"
             >Forgot Password</span
           >
+          <v-card-subtitle
+            >Please enter your mobile number to retrieve your account
+            password</v-card-subtitle
+          >
           <v-alert
             v-if="hasLoginFail"
             dense
@@ -21,11 +25,13 @@
             <v-container>
               <v-form ref="form" v-model="valid" lazy-validation>
                 <v-text-field
-                  v-model="email"
-                  label="Email"
+                  v-model="phone"
+                  label="Phone"
+                  prefix="+639"
+                  :rules="phoneRules"
                   required
                   outlined
-                  prepend-inner-icon="mdi-account"
+                  prepend-inner-icon="mdi-phone"
                 ></v-text-field>
 
                 <v-btn tile color="black" dark block large @click="forgot">
@@ -52,21 +58,15 @@ export default {
   data: () => ({
     valid: true,
     show: false,
-    email: "",
-    emailRules: [
-      (v) => !!v || "E-mail is required",
-      (v) => (v && v.length <= 40) || "Name must be less than 40 characters",
-      (v) => /.+@.+\..+/.test(v) || "Email must be valid",
-    ],
-    password: "",
-    passwordRules: [(v) => !!v || "Password is required"],
+    phone: "",
+    phoneRules: [(v) => !!v || "Phone number is required"],
   }),
 
   methods: {
     ...mapActions(["login"]),
-    validate() {
+    forgot() {
       const valid = this.$refs.form.validate();
-      if (valid) this.login({ email: this.email, password: this.password });
+      /* if (valid) this.login({ email: this.email, password: this.password }); */
     },
     reset() {
       this.$refs.form.reset();
