@@ -7,6 +7,7 @@ const router = require("express").Router();
 
 // routes
 router.post("/addClearance", clearance.upload, clearance.addClearance);
+router.post("/renewClearance", clearance.upload, clearance.renewClearance);
 router.get("/getClearances", middleware, clearance.getAllClearances);
 router.get(
   "/getIssuedClearances",

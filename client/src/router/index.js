@@ -6,6 +6,7 @@ import Auth from "@/services/auth/Register.js";
 // Pages > Auth
 import Login from "@/views/auth/Login.vue";
 import Register from "@/views/auth/Register.vue";
+import ForgotPassword from "@/views/auth/ForgotPassword.vue";
 // Pages > Navigation
 import Dashboard from "@/views/navigation/Dashboard.vue";
 import CriminalCase from "@/views/navigation/CriminalCase.vue";
@@ -15,6 +16,7 @@ import ChiefOfPolice from "@/views/navigation/ChiefOfPolice.vue";
 
 // Forms
 import AddClearance from "@/components/navigation/AddClearance.vue";
+import RenewClearance from "@/components/navigation/RenewClearance.vue";
 import UpdateClearance from "@/components/navigation/UpdateClearance.vue";
 
 //Narbar
@@ -41,6 +43,13 @@ const routes = [
     components: {
       default: Register,
       navbar: Navbar,
+    },
+  },
+  {
+    path: "/forgot-password",
+    name: "auth.forgot",
+    components: {
+      default: ForgotPassword,
     },
   },
   {
@@ -72,6 +81,30 @@ const routes = [
     name: "clearance.create",
     components: {
       default: AddClearance,
+      navbar: Navbar,
+      sidebar: Sidebar,
+    },
+    beforeEnter(to, from, next) {
+      Auth.isAuthenticated()
+        .then((response) => {
+          if (response) {
+            next(); // If authenticated, proceed with the redirect
+          } else {
+            next({ name: "auth.login" });
+          }
+          /* console.log(response.data) */
+          next();
+        })
+        .catch(() => {
+          next({ name: "auth.login" });
+        });
+    },
+  },
+  {
+    path: "/dashboard",
+    name: "clearance.renew",
+    components: {
+      default: RenewClearance,
       navbar: Navbar,
       sidebar: Sidebar,
     },

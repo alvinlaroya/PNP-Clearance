@@ -62,7 +62,7 @@
                     append-icon="mdi-magnify"
                     label="Search Clearance"
                     single-line
-                    style="margin-top: 10px"
+                    outlined
                     hide-details
                   ></v-text-field>
                 </v-col>
@@ -87,173 +87,236 @@
           </v-toolbar>
           <v-tabs-items v-model="tab">
             <v-tab-item>
-              <v-data-table
-                :search="search"
-                :headers="headers"
-                :items="pendingClearance"
-                show-expand
-                single-expand
-                loading-text="Loading... Please wait"
-                no-results-text="No Available Article"
-                class="elevation-1"
-              >
-                <template v-slot:item.actions="{ item }">
-                  <v-icon
-                    class="mr-2"
-                    color="green"
-                    @click="approveClearance(item)"
-                  >
-                    mdi-file-check-outline
-                  </v-icon>
-                  <v-icon class="mr-2" color="green" @click="editItem(item)">
-                    mdi-file-document-edit
-                  </v-icon>
-                  <v-icon class="mr-2" color="blue" @click="viewItem(item)">
-                    mdi-dots-horizontal
-                  </v-icon>
-                </template>
-                <template v-slot:item.dateOfBirth="{ item }">
-                  {{ dateFormat(item.dateOfBirth) }}
-                </template>
-                <template v-slot:item.amount="{ item }">
-                  ₱{{ item.amount }}
-                </template>
-                <template v-slot:item.issuedAt="{ item }">
-                  {{ dateTimeFormat(item.issuedAt) }}
-                </template>
-                <template v-slot:item.issuedOn="{ item }">
-                  {{ dateTimeFormat(item.issuedOn) }}
-                </template>
-                <template v-slot:expanded-item="{ headers, item }">
-                  <td>
-                    <v-chip
-                      @click="viewImage(item.idPicture)"
-                      class="ma-2"
-                      color="primary"
-                      text-color="white"
-                    >
-                      <v-icon left> mdi-image-area </v-icon>
-                      IdPicture.jpg
-                    </v-chip>
-                  </td>
-                  <td>
-                    <v-chip
-                      @click="viewImage(item.cedula)"
-                      class="ma-2"
-                      color="primary"
-                      text-color="white"
-                    >
-                      <v-icon left> mdi-image-area </v-icon>
-                      Cedula.jpg
-                    </v-chip>
-                  </td>
-                  <td>
-                    <v-chip
-                      @click="viewImage(item.ort)"
-                      class="ma-2"
-                      color="primary"
-                      text-color="white"
-                    >
-                      <v-icon left> mdi-image-area </v-icon>
-                      ORT.jpg
-                    </v-chip>
-                  </td>
-                  <td>
-                    <v-chip
-                      @click="viewImage(item.barangayClearance)"
-                      class="ma-2"
-                      color="primary"
-                      text-color="white"
-                    >
-                      <v-icon left> mdi-image-area </v-icon>
-                      BarangayClearance.jpg
-                    </v-chip>
-                  </td>
-                </template>
-              </v-data-table>
+              <v-card-text>
+                <v-data-table
+                  :search="search"
+                  :headers="headers"
+                  :items="pendingClearance"
+                  show-expand
+                  single-expand
+                  loading-text="Loading... Please wait"
+                  no-results-text="No Available Article"
+                  class="elevation-0"
+                >
+                  <template v-slot:item.actions="{ item }">
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-icon
+                          class="mr-2"
+                          color="green"
+                          @click="approveClearance(item)"
+                          v-bind="attrs"
+                          v-on="on"
+                        >
+                          mdi-file-check-outline
+                        </v-icon>
+                      </template>
+                      <span>Set to issued</span>
+                    </v-tooltip>
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-icon
+                          class="mr-2"
+                          color="green"
+                          @click="editItem(item)"
+                          v-bind="attrs"
+                          v-on="on"
+                        >
+                          mdi-file-document-edit
+                        </v-icon>
+                      </template>
+                      <span>Update Application</span>
+                    </v-tooltip>
+
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-icon
+                          class="mr-2"
+                          color="blue"
+                          @click="viewItem(item)"
+                          v-bind="attrs"
+                          v-on="on"
+                        >
+                          mdi-dots-horizontal
+                        </v-icon>
+                      </template>
+                      <span>View Application</span>
+                    </v-tooltip>
+                  </template>
+                  <template v-slot:item.dateOfBirth="{ item }">
+                    {{ dateFormat(item.dateOfBirth) }}
+                  </template>
+                  <template v-slot:item.amount="{ item }">
+                    ₱{{ item.amount }}
+                  </template>
+                  <template v-slot:item.issuedAt="{ item }">
+                    {{ dateTimeFormat(item.issuedAt) }}
+                  </template>
+                  <template v-slot:item.issuedOn="{ item }">
+                    {{ dateTimeFormat(item.issuedOn) }}
+                  </template>
+                  <template v-slot:expanded-item="{ headers, item }">
+                    <td>
+                      <v-chip
+                        @click="viewImage(item.idPicture)"
+                        class="ma-2"
+                        color="primary"
+                        text-color="white"
+                      >
+                        <v-icon left> mdi-image-area </v-icon>
+                        IdPicture.jpg
+                      </v-chip>
+                    </td>
+                    <td>
+                      <v-chip
+                        @click="viewImage(item.cedula)"
+                        class="ma-2"
+                        color="primary"
+                        text-color="white"
+                      >
+                        <v-icon left> mdi-image-area </v-icon>
+                        Cedula.jpg
+                      </v-chip>
+                    </td>
+                    <td>
+                      <v-chip
+                        @click="viewImage(item.ort)"
+                        class="ma-2"
+                        color="primary"
+                        text-color="white"
+                      >
+                        <v-icon left> mdi-image-area </v-icon>
+                        ORT.jpg
+                      </v-chip>
+                    </td>
+                    <td>
+                      <v-chip
+                        @click="viewImage(item.barangayClearance)"
+                        class="ma-2"
+                        color="primary"
+                        text-color="white"
+                      >
+                        <v-icon left> mdi-image-area </v-icon>
+                        BarangayClearance.jpg
+                      </v-chip>
+                    </td>
+                  </template>
+                </v-data-table>
+              </v-card-text>
             </v-tab-item>
             <v-tab-item>
-              <v-data-table
-                :search="search"
-                :headers="headers"
-                :items="issuedClearance"
-                show-expand
-                single-expand
-                loading-text="Loading... Please wait"
-                no-results-text="No Available Article"
-                class="elevation-1"
-              >
-                <template v-slot:item.actions="{ item }">
-                  <!-- <v-icon
-                    class="mr-2"
-                    color="green"
-                    @click="approveClearance(item)"
-                  >
-                    mdi-file-check-outline
-                  </v-icon> -->
-                  <v-icon class="mr-2" color="green" @click="editItem(item)">
-                    mdi-file-document-edit
-                  </v-icon>
-                  <v-icon class="mr-2" color="blue" @click="viewItem(item)">
-                    mdi-dots-horizontal
-                  </v-icon>
-                </template>
-                <template v-slot:item.dateOfBirth="{ item }">
-                  {{ dateFormat(item.dateOfBirth) }}
-                </template>
-                <template v-slot:item.amount="{ item }">
-                  ₱{{ item.amount }}
-                </template>
-                <template v-slot:item.issuedOn="{ item }">
-                  {{ dateTimeFormat(item.issuedOn) }}
-                </template>
-                <template v-slot:expanded-item="{ headers, item }">
-                  <td>
-                    <v-chip
-                      @click="viewImage(item.idPicture)"
-                      class="ma-2"
-                      color="primary"
-                      text-color="white"
-                    >
-                      <v-icon left> mdi-image-area </v-icon>
-                      IdPicture.jpg
-                    </v-chip>
-                  </td>
-                  <td>
-                    <v-chip
-                      @click="viewImage(item.cedula)"
-                      class="ma-2"
-                      color="primary"
-                      text-color="white"
-                    >
-                      <v-icon left> mdi-image-area </v-icon>
-                      Cedula.jpg
-                    </v-chip>
-                  </td>
-                  <td>
-                    <v-chip
-                      @click="viewImage(item.ort)"
-                      class="ma-2"
-                      color="primary"
-                      text-color="white"
-                    >
-                      <v-icon left> mdi-image-area </v-icon>
-                      ORT.jpg
-                    </v-chip>
-                  </td>
-                  <td>
-                    <v-chip
-                      @click="viewImage(item.barangayClearance)"
-                      class="ma-2"
-                      color="primary"
-                      text-color="white"
-                    >
-                      <v-icon left> mdi-image-area </v-icon>
-                      BarangayClearance.jpg
-                    </v-chip>
-                  </td>
-                </template>
-              </v-data-table>
+              <v-card-text>
+                <v-data-table
+                  :search="search"
+                  :headers="headers"
+                  :items="issuedClearance"
+                  show-expand
+                  single-expand
+                  loading-text="Loading... Please wait"
+                  no-results-text="No Available Article"
+                  class="elevation-0"
+                >
+                  <template v-slot:item.actions="{ item }">
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-icon
+                          class="mr-2"
+                          color="green"
+                          @click="renewClearance(item)"
+                          v-bind="attrs"
+                          v-on="on"
+                        >
+                          mdi-autorenew
+                        </v-icon>
+                      </template>
+                      <span>Renew Application</span>
+                    </v-tooltip>
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-icon
+                          class="mr-2"
+                          color="green"
+                          @click="editItem(item)"
+                          v-bind="attrs"
+                          v-on="on"
+                        >
+                          mdi-file-document-edit
+                        </v-icon>
+                      </template>
+                      <span>Update Application</span>
+                    </v-tooltip>
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-icon
+                          class="mr-2"
+                          color="blue"
+                          @click="viewItem(item)"
+                          v-bind="attrs"
+                          v-on="on"
+                        >
+                          mdi-dots-horizontal
+                        </v-icon>
+                      </template>
+                      <span>View Application</span>
+                    </v-tooltip>
+                  </template>
+                  <template v-slot:item.dateOfBirth="{ item }">
+                    {{ dateFormat(item.dateOfBirth) }}
+                  </template>
+                  <template v-slot:item.amount="{ item }">
+                    ₱{{ item.amount }}
+                  </template>
+                  <template v-slot:item.issuedOn="{ item }">
+                    {{ dateTimeFormat(item.issuedOn) }}
+                  </template>
+                  <template v-slot:expanded-item="{ headers, item }">
+                    <td>
+                      <v-chip
+                        @click="viewImage(item.idPicture)"
+                        class="ma-2"
+                        color="primary"
+                        text-color="white"
+                      >
+                        <v-icon left> mdi-image-area </v-icon>
+                        IdPicture.jpg
+                      </v-chip>
+                    </td>
+                    <td>
+                      <v-chip
+                        @click="viewImage(item.cedula)"
+                        class="ma-2"
+                        color="primary"
+                        text-color="white"
+                      >
+                        <v-icon left> mdi-image-area </v-icon>
+                        Cedula.jpg
+                      </v-chip>
+                    </td>
+                    <td>
+                      <v-chip
+                        @click="viewImage(item.ort)"
+                        class="ma-2"
+                        color="primary"
+                        text-color="white"
+                      >
+                        <v-icon left> mdi-image-area </v-icon>
+                        ORT.jpg
+                      </v-chip>
+                    </td>
+                    <td>
+                      <v-chip
+                        @click="viewImage(item.barangayClearance)"
+                        class="ma-2"
+                        color="primary"
+                        text-color="white"
+                      >
+                        <v-icon left> mdi-image-area </v-icon>
+                        BarangayClearance.jpg
+                      </v-chip>
+                    </td>
+                  </template>
+                </v-data-table>
+              </v-card-text>
             </v-tab-item>
           </v-tabs-items>
           <v-divider></v-divider>
@@ -661,6 +724,73 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="renewDialog" :width="hasRelatedCase ? 900 : 500">
+      <v-card>
+        <v-card-title class="text-h5"> Related Criminal Case </v-card-title>
+
+        <v-card-text v-if="hasRelatedCase">
+          <v-container fluid style="margin-top: -15px">
+            <v-row class="mt-0">
+              <v-col cols="12">
+                <v-simple-table dense>
+                  <template v-slot:default>
+                    <thead>
+                      <tr>
+                        <th class="text-left">Serial No</th>
+                        <th class="text-left">First Name</th>
+                        <th class="text-left">Middle Name</th>
+                        <th class="text-left">Last Name</th>
+                        <th class="text-left">Status</th>
+                        <th class="text-left">Created At</th>
+                      </tr>
+                    </thead>
+                    <tbody v-if="relatedCase.length > 0 && relatedCase">
+                      <tr v-for="item in relatedCase" :key="item.name">
+                        <td>{{ item.serialNo }}</td>
+                        <td>{{ item.fname }}</td>
+                        <td>{{ item.mname }}</td>
+                        <td>{{ item.lname }}</td>
+                        <td>{{ item.status ? "Pending" : "None" }}</td>
+                        <td>{{ dateTimeFormat(item.createdAt) }}</td>
+                      </tr>
+                    </tbody>
+                    <tbody v-else>
+                      <tr style="text-align: center">
+                        <td colspan="5">No criminal case related</td>
+                      </tr>
+                    </tbody>
+                  </template>
+                </v-simple-table>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+        <v-card-text v-else>
+          <v-container>
+            <v-row>
+              <v-col cols="12" class="text-center">
+                <h1>No Related Criminal Cases</h1>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            v-if="hasRelatedCase"
+            color="error"
+            text
+            @click="renewDialog = false"
+          >
+            Discard
+          </v-btn>
+          <v-btn color="primary" text @click="proceedToRenew"> Proceed </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -673,6 +803,7 @@ const { mapGetters: mapGettersNavigation, mapActions: mapActionsNavigation } =
 export default {
   data: () => ({
     dialog: false,
+    renewDialog: false,
     currentItem: {},
     viewDialog: false,
     dialogDisplayImage: "",
@@ -736,10 +867,28 @@ export default {
       "fetchClearance",
       "setCurrentClearance",
       "approveClearanceAction",
+      "searchCase",
+      "setHasRelatedDialog",
+      "setCurrentClearanceToRenew",
     ]),
     viewItem(item) {
       this.currentItem = item;
       this.viewDialog = true;
+    },
+    proceedToRenew() {
+      this.$router.push({ name: "clearance.renew" });
+    },
+    renewClearance(item) {
+      this.renewDialog = true;
+      this.setCurrentClearanceToRenew(item);
+      this.searchCase({
+        fname: item.fname,
+        mname: item.mname,
+        lname: item.lname,
+      });
+    },
+    setHasRelated(bool) {
+      this.setHasRelatedDialog(bool);
     },
     approveClearance(item) {
       const self = this;
@@ -825,6 +974,8 @@ export default {
       "issuedClearance",
       "badges",
       "issuedClearanceCount",
+      "relatedCase",
+      "hasRelatedCase",
     ]),
   },
   created() {

@@ -7,6 +7,7 @@ import Auth from "./modules/auth";
 import Dashboard from "./modules/navigation/dashboard";
 import Clearance from "./modules/navigation/clearance";
 import Case from "./modules/navigation/case";
+import ChiefOfPolice from "./modules/navigation/chief_of_police";
 import Management from "./modules/navigation/management";
 import Statistics from "./modules/navigation/statistics";
 
@@ -30,6 +31,7 @@ export default new Vuex.Store({
         case: Case,
         management: Management,
         statistics: Statistics,
+        chiefOfPolice: ChiefOfPolice,
       },
     },
   },

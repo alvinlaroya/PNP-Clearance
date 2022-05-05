@@ -1,6 +1,7 @@
 export default {
   allClearance: [],
   currentClearance: {},
+  currentClearanceRenew: {},
   pendingClearance: [],
   issuedClearance: [],
   issuedClearanceCount: 0,

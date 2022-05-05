@@ -7,7 +7,7 @@
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-card>
               <v-card-title class="ml-2"
-                >Create Clearance Application</v-card-title
+                >Update Clearance Application</v-card-title
               >
               <v-card-text>
                 <v-container fluid>
@@ -211,82 +211,16 @@
                     </v-col>
                   </v-row>
                   <v-row>
-                    <v-col cols="6">
-                      <v-text-field
-                        v-model="clearance.pnco"
-                        label="DUTY Invest PNCO"
-                        prepend-inner-icon="mdi-account"
-                        flat
-                        outlined
-                        v-bind="attrs"
-                        v-on="on"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="6">
-                      <v-text-field
-                        v-model="clearance.cop"
-                        label="Chief of Police"
-                        prepend-inner-icon="mdi-account"
-                        flat
-                        outlined
-                        v-bind="attrs"
-                        v-on="on"
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                  <v-row class="mt-0">
-                    <v-col cols="5">
-                      <v-text-field
-                        v-model="search"
-                        label="Enter Applicant Name"
-                        outlined
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="2">
-                      <v-btn
-                        :disabled="!valid"
-                        color="primary"
-                        @click="searchCrimeCase"
-                        x-large
-                      >
-                        <v-icon left> mdi-magnify </v-icon>
-                        Search
-                      </v-btn>
-                    </v-col>
-                  </v-row>
-                </v-container>
-                <v-container fluid style="margin-top: -15px">
-                  <h2>Related Criminal Case</h2>
-                  <br />
-                  <v-row>
                     <v-col cols="12">
-                      <v-simple-table dense>
-                        <template v-slot:default>
-                          <thead>
-                            <tr>
-                              <th class="text-left">Serial No</th>
-                              <th class="text-left">First Name</th>
-                              <th class="text-left">Middle Name</th>
-                              <th class="text-left">Last Name</th>
-                              <th class="text-left">Created At</th>
-                            </tr>
-                          </thead>
-                          <tbody v-if="relatedCase.length > 0 && relatedCase">
-                            <tr v-for="item in relatedCase" :key="item.name">
-                              <td>{{ item.serialNo }}</td>
-                              <td>{{ item.fname }}</td>
-                              <td>{{ item.mname }}</td>
-                              <td>{{ item.lname }}</td>
-                              <td>{{ dateTimeFormat(item.createdAt) }}</td>
-                            </tr>
-                          </tbody>
-                          <tbody v-else>
-                            <tr style="text-align: center">
-                              <td colspan="5">No criminal case related</td>
-                            </tr>
-                          </tbody>
-                        </template>
-                      </v-simple-table>
+                      <v-select
+                        v-model="clearance.cop"
+                        :items="allPolice"
+                        label="Chief of Police"
+                        item-text="fullname"
+                        item-value="fullname"
+                        flat
+                        outlined
+                      ></v-select>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -395,10 +329,15 @@ export default {
     ],
   }),
   computed: {
-    ...mapGetters(["relatedCase", "currentClearance"]),
+    ...mapGetters(["relatedCase", "currentClearance", "allPolice"]),
   },
   methods: {
-    ...mapActions(["addClearance", "searchCase", "updateClearance"]),
+    ...mapActions([
+      "addClearance",
+      "searchCase",
+      "updateClearance",
+      "fetchPolice",
+    ]),
     validate() {
       const valid = this.$refs.form.validate();
       if (valid) {

@@ -17,6 +17,7 @@
                     v-model="search"
                     append-icon="mdi-magnify"
                     label="Search User"
+                    outlined
                     single-line
                     style="margin-top: 10px"
                     hide-details
@@ -25,27 +26,44 @@
               </v-row>
             </v-container>
           </v-toolbar>
-          <v-data-table
-            :headers="headers"
-            :items="personnels"
-            loading-text="Loading... Please wait"
-            no-results-text="No Available Article"
-            class="elevation-1"
-            :search="search"
-          >
-            <template v-slot:item.actions="{ item }">
-              <v-icon class="mr-2" color="green" @click="editItem(item)" :disabled="!currentUser.hasUpdate">
-                mdi-file-document-edit
-              </v-icon>
-            </template>
-            <template v-slot:item.verified="{ item }">
-              <v-chip class="ma-2" v-if="!item.verified"> Not Verified </v-chip>
-              <v-chip class="ma-2" color="success" v-else> Verified </v-chip>
-            </template>
-            <template v-slot:item.status="{ item }">
-              <v-chip class="ma-2" color="primary"> {{ role(typeof item.status == 'object' ? item.status.value : item.status )}} </v-chip>
-            </template>
-          </v-data-table>
+          <v-card-text>
+            <v-data-table
+              :headers="headers"
+              :items="personnels"
+              loading-text="Loading... Please wait"
+              no-results-text="No Available Article"
+              class="elevation-0"
+              :search="search"
+            >
+              <template v-slot:item.actions="{ item }">
+                <v-icon
+                  class="mr-2"
+                  color="green"
+                  @click="editItem(item)"
+                  :disabled="!currentUser.hasUpdate"
+                >
+                  mdi-file-document-edit
+                </v-icon>
+              </template>
+              <template v-slot:item.verified="{ item }">
+                <v-chip class="ma-2" v-if="!item.verified">
+                  Not Verified
+                </v-chip>
+                <v-chip class="ma-2" color="success" v-else> Verified </v-chip>
+              </template>
+              <template v-slot:item.status="{ item }">
+                <v-chip class="ma-2" color="primary">
+                  {{
+                    role(
+                      typeof item.status == "object"
+                        ? item.status.value
+                        : item.status
+                    )
+                  }}
+                </v-chip>
+              </template>
+            </v-data-table>
+          </v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -54,47 +72,59 @@
 
       <v-card>
         <v-card-title class="text-h5 grey lighten-2">
-          Update {{ user.fname  }}
+          Update {{ user.fname }}
         </v-card-title>
 
         <v-card-text>
-            <v-container>
-              <v-row>
-                <v-col cols="12">
-                  <v-switch
-                    v-model="user.verified"
-                    :label="user.verified ? `Accept ${user.fname} ${user.lname}` : `Decline ${user.fname} ${user.lname}`"
-                  ></v-switch>
-                </v-col>
-              </v-row>
-              <v-row v-if="user.verified" class="mt-0">
-                <v-col cols="6">
-                  <v-switch
-                    v-model="user.hasUpdate"
-                    :label="user.hasUpdate ? `${user.fname} can update a personnel` : `${user.fname} can't update a personnel`"
-                  ></v-switch>
-                </v-col>
-                <v-col cols="6">
-                  <v-select
-                    v-model="user.status"
-                    :items="roles"
-                    item-text="label"
-                    item-value="value"
-                    label="Select Role"
-                    return-object
-                    outlined
-                  ></v-select>
-                </v-col>
-              </v-row>
-            </v-container>
+          <v-container>
+            <v-row>
+              <v-col cols="12">
+                <v-switch
+                  v-model="user.verified"
+                  :label="
+                    user.verified
+                      ? `Accept ${user.fname} ${user.lname}`
+                      : `Decline ${user.fname} ${user.lname}`
+                  "
+                ></v-switch>
+              </v-col>
+            </v-row>
+            <v-row v-if="user.verified" class="mt-0">
+              <v-col cols="6">
+                <v-switch
+                  v-model="user.hasUpdate"
+                  :label="
+                    user.hasUpdate
+                      ? `${user.fname} can update a personnel`
+                      : `${user.fname} can't update a personnel`
+                  "
+                ></v-switch>
+              </v-col>
+              <v-col cols="6">
+                <v-select
+                  v-model="user.status"
+                  :items="roles"
+                  item-text="label"
+                  item-value="value"
+                  label="Select Role"
+                  return-object
+                  outlined
+                ></v-select>
+              </v-col>
+            </v-row>
+          </v-container>
         </v-card-text>
 
         <v-divider></v-divider>
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="default" text @click="updateDialog = false"> Close </v-btn>
-          <v-btn color="success" text @click="updatePersonnel"> Save Changes </v-btn>
+          <v-btn color="default" text @click="updateDialog = false">
+            Close
+          </v-btn>
+          <v-btn color="success" text @click="updatePersonnel">
+            Save Changes
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -108,12 +138,7 @@
       {{ snackbarText }}
 
       <template v-slot:action="{ attrs }">
-        <v-btn
-          color="black"
-          text
-          v-bind="attrs"
-          @click="snackbar = false"
-        >
+        <v-btn color="black" text v-bind="attrs" @click="snackbar = false">
           Close
         </v-btn>
       </template>
@@ -123,7 +148,8 @@
 
 <script>
 import { createNamespacedHelpers } from "vuex";
-const { mapGetters: navigationMapGetters, mapActions: navigationMapActions } = createNamespacedHelpers("navigation");
+const { mapGetters: navigationMapGetters, mapActions: navigationMapActions } =
+  createNamespacedHelpers("navigation");
 const { mapGetters: authMapGatters } = createNamespacedHelpers("auth");
 
 export default {
@@ -162,7 +188,7 @@ export default {
       { label: "No Role", value: 0 },
       { label: "Super Admin", value: 1 },
       { label: "Admin", value: 2 },
-    ]
+    ],
   }),
   watch: {
     options: {
@@ -181,8 +207,8 @@ export default {
   methods: {
     ...navigationMapActions(["fetchUsers", "updateUser"]),
     editItem(item) {
-      this.user = item
-      this.updateDialog = true
+      this.user = item;
+      this.updateDialog = true;
     },
     downloadItem(item) {
       console.log(item);
@@ -207,21 +233,21 @@ export default {
       this.items[0].count = this.count;
     },
     role(status) {
-        if(status == 0) return "No Role"
-        if(status == 1) return "Super Admin"
-        if(status == 2) return "Admin"
+      if (status == 0) return "No Role";
+      if (status == 1) return "Super Admin";
+      if (status == 2) return "Admin";
     },
     updatePersonnel() {
-      this.updateUser(this.user)
-      this.snackbar = true
-      this.snackbarText = `Personnel ${this.user.fname} Updated!`
-      this.updateDialog = false
-      this.user = {}
-    }
+      this.updateUser(this.user);
+      this.snackbar = true;
+      this.snackbarText = `Personnel ${this.user.fname} Updated!`;
+      this.updateDialog = false;
+      this.user = {};
+    },
   },
   computed: {
     ...navigationMapGetters(["personnels"]),
-    ...authMapGatters(["currentUser"])
+    ...authMapGatters(["currentUser"]),
   },
   created() {
     this.setBadge();

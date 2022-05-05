@@ -7,4 +7,5 @@ export const badges = (state) => ({
   verified: state.badges.verified,
 });
 export const currentClearance = (state) => state.currentClearance;
+export const currentClearanceRenew = (state) => state.currentClearanceRenew;
 export const issuedClearanceCount = (state) => state.issuedClearanceCount;

@@ -131,6 +131,95 @@ const addClearance = async (req, res) => {
   });
 };
 
+// CREATE CLEARANCE
+const renewClearance = async (req, res) => {
+  const {
+    fname,
+    mname,
+    lname,
+    address,
+    dateOfBirth,
+    placeOfBirth,
+    age,
+    civilStatus,
+    citizenship,
+    height,
+    weight,
+    purpose,
+    phone,
+    numberOfIssued,
+    orNumber,
+    ctcNumber,
+    amount,
+    pnco,
+    cop,
+    issuedAt,
+    issuedOn,
+    issued,
+    verified,
+    cedula,
+    idPicture,
+    barangayClearance,
+    ort,
+  } = req.body;
+
+  let param = {
+    fname,
+    mname,
+    lname,
+    address,
+    dateOfBirth,
+    placeOfBirth,
+    age,
+    civilStatus,
+    citizenship,
+    height,
+    weight,
+    purpose,
+    phone,
+    orNumber,
+    ctcNumber,
+    amount,
+    issuedAt,
+    issuedOn,
+    issued,
+    numberOfIssued,
+    verified,
+    pnco,
+    cop,
+    cedula,
+    idPicture,
+    barangayClearance,
+    ort,
+  };
+
+  if (issuedOn != "") {
+    const from = "Vonage APIs";
+    const to = `639${phone}`;
+    const text = `Good day ${fname}, Your application for renewal of Police Clearance will be issue on ${issuedOn}. Thank You!`;
+
+    vonage.message.sendSms(from, to, text, (err, responseData) => {
+      if (err) {
+        console.log(err);
+      } else {
+        if (responseData.messages[0]["status"] === "0") {
+          console.log("Message sent successfully.");
+        } else {
+          console.log(
+            `Message failed with error: ${responseData.messages[0]["error-text"]}`
+          );
+        }
+      }
+    });
+  }
+
+  const clearance = await Clearance.create(param);
+  res.status(200).json({
+    message: "success",
+    currentClearance: clearance,
+  });
+};
+
 // READ CLEARANCE
 const getAllClearances = async (req, res) => {
   /* const { itemsPerPage, pageStart, page, search, category, dateStart, dateEnd } = req.body */
@@ -817,6 +906,7 @@ const clearanceIncomeStatisticalReport = async (req, res) => {
 
 module.exports = {
   addClearance,
+  renewClearance,
   getAllClearances,
   getAllIssuedClearances,
   updateClearance,

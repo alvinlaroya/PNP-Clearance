@@ -7,7 +7,7 @@
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-card>
               <v-card-title class="ml-2"
-                >Create Clearance Application</v-card-title
+                >Renew Clearance Application</v-card-title
               >
               <v-card-text>
                 <v-container fluid>
@@ -90,7 +90,7 @@
                       <v-menu
                         v-model="birthDateMenu"
                         :close-on-content-click="true"
-                        :nudge-left="90"
+                        :nudge-left="20"
                         transition="scale-transition"
                         offset-y
                         min-width="auto"
@@ -158,11 +158,11 @@
                         v-model="clearance.phone"
                         :rules="requiredRules"
                         prefix="+639"
+                        hint="Enter your phone except the 09 digit (ex. 388566223)"
+                        persistent-hint
                         label="Phone"
                         required
                         outlined
-                        hint="Enter your phone except the 09 digit (ex. 388566223)"
-                        persistent-hint
                       ></v-text-field>
                     </v-col>
                     <v-col cols="3">
@@ -197,7 +197,6 @@
                             v-model="clearance.issuedOn"
                             label="Issued On"
                             prepend-inner-icon="mdi-calendar"
-                            readonly
                             flat
                             outlined
                             v-bind="attrs"
@@ -208,44 +207,6 @@
                           v-model="clearance.issuedOn"
                         ></v-date-picker>
                       </v-menu>
-                    </v-col>
-                  </v-row>
-                  <v-row class="mt-0">
-                    <v-col cols="3">
-                      <v-file-input
-                        v-model="clearance.idPicture"
-                        @change="selectIdPicture"
-                        accept="image/*"
-                        label="ID Picture"
-                        outlined
-                      ></v-file-input>
-                    </v-col>
-                    <v-col cols="3">
-                      <v-file-input
-                        v-model="clearance.barangayClearance"
-                        @change="selectedBarangayClearance"
-                        accept="image/*"
-                        label="Barangay Clearance"
-                        outlined
-                      ></v-file-input>
-                    </v-col>
-                    <v-col cols="3">
-                      <v-file-input
-                        v-model="clearance.cedula"
-                        @change="selectedCedula"
-                        accept="image/*"
-                        label="Cedula"
-                        outlined
-                      ></v-file-input>
-                    </v-col>
-                    <v-col cols="3">
-                      <v-file-input
-                        v-model="clearance.ort"
-                        @change="selectedOrt"
-                        accept="image/*"
-                        label="ORT"
-                        outlined
-                      ></v-file-input>
                     </v-col>
                   </v-row>
                   <v-row>
@@ -261,63 +222,52 @@
                       ></v-select>
                     </v-col>
                   </v-row>
-                </v-container>
-                <!--  <v-container fluid style="margin-top: -15px">
-                  <h2>Related Criminal Case</h2>
-                  <v-row class="mt-0" style="margin-bottom: -40px">
-                    <v-col cols="5">
-                      <v-text-field
-                        v-model="search"
-                        label="Enter Applicant Name"
-                        outlined
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="2">
-                      <v-btn
-                        :disabled="!valid"
-                        color="primary"
-                        @click="searchCrimeCase"
-                        x-large
-                      >
-                        <v-icon left> mdi-magnify </v-icon>
-                        Search
-                      </v-btn>
-                    </v-col>
-                  </v-row>
                   <v-row class="mt-0">
                     <v-col cols="12">
-                      <v-simple-table dense>
-                        <template v-slot:default>
-                          <thead>
-                            <tr>
-                              <th class="text-left">Serial No</th>
-                              <th class="text-left">First Name</th>
-                              <th class="text-left">Middle Name</th>
-                              <th class="text-left">Last Name</th>
-                              <th class="text-left">Status</th>
-                              <th class="text-left">Created At</th>
-                            </tr>
-                          </thead>
-                          <tbody v-if="relatedCase.length > 0 && relatedCase">
-                            <tr v-for="item in relatedCase" :key="item.name">
-                              <td>{{ item.serialNo }}</td>
-                              <td>{{ item.fname }}</td>
-                              <td>{{ item.mname }}</td>
-                              <td>{{ item.lname }}</td>
-                              <td>{{ item.status ? "Active" : "Pending" }}</td>
-                              <td>{{ dateTimeFormat(item.createdAt) }}</td>
-                            </tr>
-                          </tbody>
-                          <tbody v-else>
-                            <tr style="text-align: center">
-                              <td colspan="5">No criminal case related</td>
-                            </tr>
-                          </tbody>
-                        </template>
-                      </v-simple-table>
+                      <h4>Attachments</h4>
+                      <v-chip
+                        @click="viewImage(clearance.idPicture)"
+                        class="ma-2"
+                        color="pink"
+                        label
+                        text-color="white"
+                      >
+                        <v-icon left> mdi-image-area </v-icon>
+                        IdPicture.jpg
+                      </v-chip>
+                      <v-chip
+                        @click="viewImage(clearance.cedula)"
+                        class="ma-2"
+                        color="pink"
+                        label
+                        text-color="white"
+                      >
+                        <v-icon left> mdi-image-area </v-icon>
+                        Cedula.jpg
+                      </v-chip>
+                      <v-chip
+                        @click="viewImage(clearance.ort)"
+                        class="ma-2"
+                        color="pink"
+                        label
+                        text-color="white"
+                      >
+                        <v-icon left> mdi-image-area </v-icon>
+                        ORT.jpg
+                      </v-chip>
+                      <v-chip
+                        @click="viewImage(clearance.barangayClearance)"
+                        class="ma-2"
+                        color="pink"
+                        label
+                        text-color="white"
+                      >
+                        <v-icon left> mdi-image-area </v-icon>
+                        BarangayClearance.jpg
+                      </v-chip>
                     </v-col>
                   </v-row>
-                </v-container> -->
+                </v-container>
                 <v-container fluid>
                   <v-row align="center" justify="end">
                     <!-- <v-checkbox
@@ -325,14 +275,6 @@
                       :label="clearance.verified ? 'Verified' : 'Not Verified'"
                       required
                     ></v-checkbox> -->
-                    <v-btn
-                      :disabled="!valid"
-                      :color="clearance.verified ? 'error' : 'primary'"
-                      @click="setVerified"
-                      x-large
-                    >
-                      {{ clearance.verified ? "Not Verified" : "Verified" }}
-                    </v-btn>
                     <v-btn
                       color="success"
                       class="mr-4 ml-5"
@@ -349,6 +291,9 @@
         </v-col>
       </v-row>
     </v-container>
+    <v-dialog v-model="attachDialog" width="500">
+      <v-img :src="displayImage(attachDialogSrc)" style="width: 100%"></v-img>
+    </v-dialog>
     <v-snackbar
       v-model="snackbar"
       :timeout="2000"
@@ -373,6 +318,8 @@ const { mapGetters, mapActions } = createNamespacedHelpers("navigation");
 
 export default {
   data: () => ({
+    attachDialog: false,
+    attachDialogSrc: "",
     snackbar: false,
     snackbarText: "",
     birthDateMenu: null,
@@ -385,7 +332,7 @@ export default {
         href: "dashboard",
       },
       {
-        text: "Add Clearance Application",
+        text: "Renew Clearance Application",
         disabled: true,
         href: "breadcrumbs_link_2",
       },
@@ -406,35 +353,7 @@ export default {
     items: ["Item 1", "Item 2", "Item 3", "Item 4"],
     checkbox: false,
     search: "",
-    clearance: {
-      fname: "",
-      mname: "",
-      lname: "",
-      address: "",
-      dateOfBirth: "",
-      placeOfBirth: "",
-      age: 0,
-      civilStatus: "",
-      citizenship: "",
-      height: "",
-      weight: "",
-      purpose: "",
-      phone: "",
-      orNumber: "",
-      ctcNumber: "",
-      amount: 0,
-      issuedAt: "",
-      issuedOn: "",
-      verified: 0,
-      idPicture: null,
-      pnco: "",
-      cop: "",
-      barangayClearance: null,
-      cedula: null,
-      ort: null,
-      issued: false,
-      numberOfIssued: 1,
-    },
+    clearance: {},
     desserts: [
       {
         name: "Frozen Yogurt",
@@ -451,30 +370,58 @@ export default {
     ],
   }),
   computed: {
-    ...mapGetters(["relatedCase", "allPolice"]),
+    ...mapGetters(["relatedCase", "currentClearanceRenew", "allPolice"]),
   },
   methods: {
-    ...mapActions(["addClearance", "searchCase", "fetchPolice"]),
-    setVerified() {
-      this.clearance.verified = !this.clearance.verified;
+    ...mapActions([
+      "addClearance",
+      "renewClearance",
+      "searchCase",
+      "updateClearance",
+      "fetchPolice",
+    ]),
+    viewImage(src) {
+      this.attachDialog = true;
+      this.attachDialogSrc = src;
+    },
+    displayImage(src) {
+      return `http://localhost:8000/${src}`;
     },
     validate() {
       const valid = this.$refs.form.validate();
       if (valid) {
-        var formData = this.toFormData(this.clearance);
-        this.addClearance(formData);
-        this.$refs.form.reset();
-        this.snackbar = true;
-        this.snackbarText = "Police Clearance Application Created!";
-        this.$router.replace({ name: "navigation.dashboard" });
-
-        this.$swal({
-          position: "center",
-          icon: "success",
-          title: "Clearance Application Successfully Created!",
-          showConfirmButton: false,
-          timer: 1500,
+        this.clearance.id = null;
+        this.renewClearance({
+          fname: this.clearance.fname,
+          mname: this.clearance.mname,
+          lname: this.clearance.lname,
+          address: this.clearance.address,
+          dateOfBirth: this.clearance.dateOfBirth,
+          placeOfBirth: this.clearance.placeOfBirth,
+          age: this.clearance.age,
+          civilStatus: this.clearance.civilStatus,
+          citizenship: this.clearance.citizenship,
+          height: this.clearance.height,
+          weight: this.clearance.weight,
+          purpose: this.clearance.purpose,
+          phone: this.clearance.phone,
+          orNumber: this.clearance.orNumber,
+          ctcNumber: this.clearance.ctcNumber,
+          amount: this.clearance.amount,
+          issuedOn: this.clearance.issuedOn,
+          verified: this.clearance.verified,
+          idPicture: this.clearance.idPicture,
+          pnco: this.clearance.pnco,
+          cop: this.clearance.cop,
+          barangayClearance: this.clearance.barangayClearance,
+          cedula: this.clearance.cedula,
+          ort: this.clearance.ort,
+          issued: false,
+          numberOfIssued: 1,
         });
+        this.snackbar = true;
+        this.snackbarText = "Police Clearance Application Updated!";
+        this.$router.replace({ name: "navigation.dashboard" });
       }
     },
     reset() {
@@ -514,6 +461,9 @@ export default {
         minute: "2-digit",
       });
     },
+  },
+  created() {
+    this.clearance = this.currentClearanceRenew;
   },
 };
 </script>

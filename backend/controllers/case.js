@@ -52,6 +52,28 @@ const searchCase = async (req, res) => {
     where: {
       [Op.and]: [
         {
+          fname: search.fname,
+          mname: search.mname,
+          lname: search.lname,
+        },
+      ],
+    },
+    order: [["createdAt", "DESC"]],
+  });
+
+  res.header("Access-Control-Allow-Origin", "*");
+  res.json({
+    message: "success",
+    data: relatedCase,
+  });
+};
+
+/* const searchCase = async (req, res) => {
+  const { search } = req.body;
+  let relatedCase = await Case.findAndCountAll({
+    where: {
+      [Op.and]: [
+        {
           [Op.or]: [
             {
               fname: {
@@ -80,7 +102,7 @@ const searchCase = async (req, res) => {
     message: "success",
     data: relatedCase,
   });
-};
+}; */
 
 // UPDATE CASE
 const updateCase = async (req, res) => {

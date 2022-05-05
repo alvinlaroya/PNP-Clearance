@@ -1,5 +1,6 @@
 export default {
   allCase: [],
   badges: 0,
-  relatedCase: []
+  relatedCase: [],
+  hasRelatedCase: false,
 };

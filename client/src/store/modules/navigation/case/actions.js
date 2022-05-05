@@ -4,13 +4,17 @@ import * as types from "@/store/mutation-types";
 export const fetchCase = ({ commit }) => {
   EventService.getCaseEvent()
     .then((response) => {
-      console.log("CASE", response)
+      console.log("CASE", response);
       commit(types.SET_CASE_BADGE, response.data.data.count);
       commit(types.SET_ALL_CASE, response.data.data.rows);
     })
     .catch((error) => {
       console.log(error);
     });
+};
+
+export const setHasRelatedDialog = ({ commit }, payload) => {
+  commit(types.SET_HAS_RELATED_DIALOG, payload);
 };
 
 export const searchCase = ({ commit }, payload) => {
@@ -31,7 +35,7 @@ export const addCase = ({ commit }, payload) => {
     .catch((error) => {
       console.log(error);
     });
-}
+};
 
 export const updateCase = ({ commit }, payload) => {
   EventService.updateCaseEvent(payload)
@@ -41,7 +45,4 @@ export const updateCase = ({ commit }, payload) => {
     .catch((error) => {
       console.log(error);
     });
-}
-
-
-
+};

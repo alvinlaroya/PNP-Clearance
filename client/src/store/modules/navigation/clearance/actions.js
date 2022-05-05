@@ -15,9 +15,20 @@ export const fetchClearance = ({ commit }) => {
 };
 
 export const addClearance = ({ commit }, payload) => {
-  console.log("Fresh", ...payload);
   EventService.addClearanceEvent(payload)
     .then((response) => {
+      console.log("added", response.data.currentClearance);
+      commit(types.SET_ADDED_CLEARANCE, response.data.currentClearance);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const renewClearance = ({ commit }, payload) => {
+  EventService.renewClearanceEvent(payload)
+    .then((response) => {
+      console.log("added", response.data.currentClearance);
       commit(types.SET_ADDED_CLEARANCE, response.data.currentClearance);
     })
     .catch((error) => {
@@ -39,6 +50,9 @@ export const setCurrentClearance = ({ commit }, payload) => {
   commit(types.SET_CURRENT_CLEARANCE, payload);
 };
 
+export const setCurrentClearanceToRenew = ({ commit }, payload) => {
+  commit(types.SET_CURRENT_CLEARANCE_TO_RENEW, payload);
+};
 export const updateClearance = (_, payload) => {
   EventService.updateClearanceEvent(payload)
     .then((response) => {

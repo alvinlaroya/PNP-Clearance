@@ -113,7 +113,10 @@
 <script>
 import { EventBus } from "@/main.js";
 import { createNamespacedHelpers } from "vuex";
-const { mapGetters, mapActions } = createNamespacedHelpers("auth");
+const { mapGetters: mapGettersAuth, mapActions: mapActionsAuth } =
+  createNamespacedHelpers("auth");
+const { mapGetters: mapGettersNavigation, mapActions: mapActionsNavigation } =
+  createNamespacedHelpers("navigation");
 
 export default {
   data: () => ({
@@ -161,7 +164,8 @@ export default {
     ],
   }),
   methods: {
-    ...mapActions(["logOutUser"]),
+    ...mapActionsAuth(["logOutUser"]),
+    ...mapActionsNavigation(["fetchPolice"]),
     navMenuMethods(method) {
       switch (method) {
         case "logout":
@@ -173,7 +177,11 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["currentUser"]),
+    ...mapGettersAuth(["currentUser"]),
+    ...mapGettersNavigation(["allPolice"]),
+  },
+  mounted() {
+    this.fetchPolice();
   },
   created() {
     EventBus.$on("switch-mini", () => {

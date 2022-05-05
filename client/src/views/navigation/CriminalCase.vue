@@ -21,34 +21,37 @@
                     v-model="search"
                     append-icon="mdi-magnify"
                     label="Search Case"
+                    outlined
                     single-line
-                    style="margin-top: 10px"
+                    style="margin-top: 10px; margin-bottom: 15px"
                     hide-details
                   ></v-text-field>
                 </v-col>
               </v-row>
             </v-container>
           </v-toolbar>
-          <v-data-table
-            :headers="headers"
-            :items="allCase"
-            loading-text="Loading... Please wait"
-            no-results-text="No Available Article"
-            class="elevation-1"
-            :search="search"
-          >
-            <template v-slot:item.actions="{ item }">
-              <v-icon class="mr-2" color="green" @click="editItem(item)">
-                mdi-file-document-edit
-              </v-icon>
-            </template>
-            <template v-slot:item.status="{ item }">
-              {{ item.status ? "Active" : "Pending" }}
-            </template>
-            <template v-slot:item.createdAt="{ item }">
-              {{ dateTimeFormat(item.createdAt) }}
-            </template>
-          </v-data-table>
+          <v-card-text>
+            <v-data-table
+              :headers="headers"
+              :items="allCase"
+              loading-text="Loading... Please wait"
+              no-results-text="No Available Article"
+              class="elevation-0"
+              :search="search"
+            >
+              <template v-slot:item.actions="{ item }">
+                <v-icon class="mr-2" color="green" @click="editItem(item)">
+                  mdi-file-document-edit
+                </v-icon>
+              </template>
+              <template v-slot:item.status="{ item }">
+                {{ item.status ? "Pending" : "None" }}
+              </template>
+              <template v-slot:item.createdAt="{ item }">
+                {{ dateTimeFormat(item.createdAt) }}
+              </template>
+            </v-data-table>
+          </v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -67,9 +70,7 @@
                 <v-col cols="12">
                   <v-switch
                     v-model="criminalCase.status"
-                    :label="
-                      criminalCase.status ? 'Active Case' : 'Pending Case'
-                    "
+                    :label="criminalCase.status ? 'Pending Case' : 'No Case'"
                   ></v-switch>
                 </v-col>
               </v-row>

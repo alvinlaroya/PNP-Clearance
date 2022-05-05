@@ -48,6 +48,17 @@ export default {
     });
   },
 
+  async renewClearanceEvent(payload) {
+    return await axios.post(`${apiUrl}/clearance/renewClearance`, payload, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      },
+    });
+  },
+
   async approveClearanceEvent(payload) {
     await axios.put(
       `${apiUrl}/clearance/approveClearance/${payload.id}`,
