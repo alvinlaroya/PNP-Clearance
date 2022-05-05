@@ -34,7 +34,14 @@
                   prepend-inner-icon="mdi-phone"
                 ></v-text-field>
 
-                <v-btn tile color="black" dark block large @click="forgot">
+                <v-btn
+                  tile
+                  color="black"
+                  dark
+                  block
+                  large
+                  @click="forgotPassword"
+                >
                   <v-icon left> mdi-check </v-icon>
                   Submit
                 </v-btn>
@@ -63,19 +70,26 @@ export default {
   }),
 
   methods: {
-    ...mapActions(["login"]),
-    forgot() {
+    ...mapActions(["forgot"]),
+    forgotPassword() {
       const valid = this.$refs.form.validate();
-      /* if (valid) this.login({ email: this.email, password: this.password }); */
+      if (valid) {
+        this.forgot({ phone: this.phone });
+
+        this.$swal({
+          position: "center",
+          icon: "success",
+          title: "Forgot Password, Please check your inbox!",
+          showConfirmButton: false,
+          timer: 5000,
+        });
+      }
     },
     reset() {
       this.$refs.form.reset();
     },
     resetValidation() {
       this.$refs.form.resetValidation();
-    },
-    forgot() {
-      this.$router.push({ name: "auth.forgot" });
     },
   },
   computed: {

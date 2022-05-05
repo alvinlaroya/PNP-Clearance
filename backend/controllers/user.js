@@ -1,10 +1,15 @@
 require("dotenv").config();
 
-const { Sequelize } = require("sequelize");
+const { Sequelize, json } = require("sequelize");
 const Op = Sequelize.Op;
 const db = require("../models");
 const jwt = require("jsonwebtoken");
 const { use } = require("../routes/user");
+const Vonage = require("@vonage/server-sdk");
+const vonage = new Vonage({
+  apiKey: process.env.VONAGE_API_KEY,
+  apiSecret: process.env.VONAGE_API_SECRET,
+});
 
 // MODEL
 const User = db.users;
@@ -131,9 +136,46 @@ const updatePersonnel = async (req, res) => {
   res.sendStatus(200);
 };
 
+// FORGOT PASSWORD
+const forgotPassword = async (req, res) => {
+  let resultUser = await User.findOne({ where: { phone: req.body.phone } });
+
+  let r = (Math.random() + 1).toString(36).substring(7);
+  let newPassword = `password${r}`;
+
+  if (resultUser) {
+    resultUser.update({
+      password: newPassword,
+    });
+
+    const from = "Vonage APIs";
+    const to = `639${resultUser.phone}`;
+    const text = `Your new password is ${newPassword}!`;
+
+    vonage.message.sendSms(from, to, text, (err, responseData) => {
+      if (err) {
+        console.log(err);
+      } else {
+        if (responseData.messages[0]["status"] === "0") {
+          console.log("Message sent successfully.");
+        } else {
+          console.log(
+            `Message failed with error: ${responseData.messages[0]["error-text"]}`
+          );
+        }
+      }
+    });
+
+    /* console.log(`new password ${newPassword}`); */
+  }
+
+  res.sendStatus(200);
+};
+
 module.exports = {
   authenticateUserWithemail,
   registerUser,
+  forgotPassword,
   getAuthenticatedUser,
   getAllUsers,
   updatePersonnel,
