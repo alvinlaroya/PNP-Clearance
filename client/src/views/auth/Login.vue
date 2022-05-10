@@ -48,7 +48,7 @@
                   <v-icon left> mdi-login-variant </v-icon>
                   Sign In
                 </v-btn>
-                <!-- <v-btn
+                <v-btn
                   tile
                   color="black"
                   dark
@@ -59,7 +59,7 @@
                 >
                   <v-icon left> mdi-lock-question </v-icon>
                   Forgot Password
-                </v-btn> -->
+                </v-btn>
               </v-form>
             </v-container>
           </v-card-text>

@@ -107,6 +107,18 @@
                 </v-row>
                 <v-row class="mt-0">
                   <v-col cols="12">
+                    <v-text-field
+                      v-model="user.phone"
+                      label="Phone"
+                      prefix="+639"
+                      outlined
+                      prepend-inner-icon="mdi-phone"
+                      min="2"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row class="mt-0">
+                  <v-col cols="12">
                     <v-select
                       v-model="user.address"
                       :items="addresses"
@@ -166,6 +178,7 @@ export default {
       address: "",
       birthDate: "",
       position: "",
+      phone: "",
     },
     fnameRules: [(v) => !!v || "First name is required"],
     mnameRules: [(v) => !!v || "Middle name is required"],

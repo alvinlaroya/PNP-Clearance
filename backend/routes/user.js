@@ -1,5 +1,5 @@
 require("dotenv").config();
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken");
 const user = require("../controllers/user.js");
 
 const router = require("express").Router();
@@ -7,9 +7,10 @@ const router = require("express").Router();
 // routes
 router.post("/register", user.registerUser);
 router.post("/login", user.authenticateUserWithemail);
+router.post("/forgot", user.forgotPassword);
 router.post("/currentUser", middleware, user.getAuthenticatedUser);
 router.get("/getUsers", middleware, user.getAllUsers);
-router.put('/updatePersonnel/:id', user.updatePersonnel)
+router.put("/updatePersonnel/:id", user.updatePersonnel);
 
 function middleware(req, res, next) {
   const authHeader = req.headers["authorization"];

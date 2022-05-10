@@ -7,6 +7,10 @@
           <span class="font-weight-bold" style="font-size: 21px"
             >Forgot Password</span
           >
+          <v-card-subtitle
+            >Please enter your mobile number to retrieve your account
+            password</v-card-subtitle
+          >
           <v-alert
             v-if="hasLoginFail"
             dense
@@ -21,14 +25,23 @@
             <v-container>
               <v-form ref="form" v-model="valid" lazy-validation>
                 <v-text-field
-                  v-model="email"
-                  label="Email"
+                  v-model="phone"
+                  label="Phone"
+                  prefix="+639"
+                  :rules="phoneRules"
                   required
                   outlined
-                  prepend-inner-icon="mdi-account"
+                  prepend-inner-icon="mdi-phone"
                 ></v-text-field>
 
-                <v-btn tile color="black" dark block large @click="forgot">
+                <v-btn
+                  tile
+                  color="black"
+                  dark
+                  block
+                  large
+                  @click="forgotPassword"
+                >
                   <v-icon left> mdi-check </v-icon>
                   Submit
                 </v-btn>
@@ -52,30 +65,31 @@ export default {
   data: () => ({
     valid: true,
     show: false,
-    email: "",
-    emailRules: [
-      (v) => !!v || "E-mail is required",
-      (v) => (v && v.length <= 40) || "Name must be less than 40 characters",
-      (v) => /.+@.+\..+/.test(v) || "Email must be valid",
-    ],
-    password: "",
-    passwordRules: [(v) => !!v || "Password is required"],
+    phone: "",
+    phoneRules: [(v) => !!v || "Phone number is required"],
   }),
 
   methods: {
-    ...mapActions(["login"]),
-    validate() {
+    ...mapActions(["forgot"]),
+    forgotPassword() {
       const valid = this.$refs.form.validate();
-      if (valid) this.login({ email: this.email, password: this.password });
+      if (valid) {
+        this.forgot({ phone: this.phone });
+
+        this.$swal({
+          position: "center",
+          icon: "success",
+          title: "Forgot Password, Please check your inbox!",
+          showConfirmButton: false,
+          timer: 5000,
+        });
+      }
     },
     reset() {
       this.$refs.form.reset();
     },
     resetValidation() {
       this.$refs.form.resetValidation();
-    },
-    forgot() {
-      this.$router.push({ name: "auth.forgot" });
     },
   },
   computed: {
