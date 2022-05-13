@@ -1,6 +1,11 @@
 import EventService from "@/services/clearance/Clearance.js";
 import * as types from "@/store/mutation-types";
 
+export const printClearance = (_, payload) => {
+  const response = EventService.printClearanceEvent(payload);
+  console.log(response);
+};
+
 export const fetchClearance = ({ commit }) => {
   EventService.getClearanceEvent()
     .then((response) => {

@@ -137,10 +137,10 @@
                           v-bind="attrs"
                           v-on="on"
                         >
-                          mdi-dots-horizontal
+                          mdi-export
                         </v-icon>
                       </template>
-                      <span>View Application</span>
+                      <span>Export Application</span>
                     </v-tooltip>
                   </template>
                   <template v-slot:item.dateOfBirth="{ item }">
@@ -254,10 +254,10 @@
                           v-bind="attrs"
                           v-on="on"
                         >
-                          mdi-dots-horizontal
+                          mdi-export
                         </v-icon>
                       </template>
-                      <span>View Application</span>
+                      <span>Export Application</span>
                     </v-tooltip>
                   </template>
                   <template v-slot:item.dateOfBirth="{ item }">
@@ -870,10 +870,19 @@ export default {
       "searchCase",
       "setHasRelatedDialog",
       "setCurrentClearanceToRenew",
+      "printClearance",
     ]),
     viewItem(item) {
-      this.currentItem = item;
-      this.viewDialog = true;
+      const param = {
+        ...item,
+        pnco: `${this.currentUser.fname} ${this.currentUser.lname}`,
+      };
+      this.printClearance(param).then(() => {
+        const url = `http://localhost:8000/images/${item.fname}_${item.mname}_${item.lname}.docx`;
+        window.location.href = url;
+      });
+      /* this.currentItem = item;
+      this.viewDialog = true; */
     },
     proceedToRenew() {
       this.$router.push({ name: "clearance.renew" });

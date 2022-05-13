@@ -20,7 +20,7 @@
                   <v-text-field
                     v-model="search"
                     append-icon="mdi-magnify"
-                    label="Search Case"
+                    label="Search Chief of Police"
                     single-line
                     outlined
                     style="margin-top: 10px; margin-bottom: 15px"

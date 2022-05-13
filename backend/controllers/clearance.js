@@ -12,6 +12,13 @@ const db = require("../models");
 const multer = require("multer");
 const path = require("path");
 
+const PizZip = require("pizzip");
+const Docxtemplater = require("docxtemplater");
+
+const fs = require("fs");
+/* const { PDFNet } = require("@pdftron/pdfnet-node"); */
+//Place your word file in source
+
 // Weekly helpers
 const weeklyHelpers = require("../helpers/getWeekly.js");
 
@@ -45,6 +52,104 @@ const upload = multer({
   { name: "barangayClearance", maxCount: 1 },
   { name: "ort", maxCount: 1 },
 ]);
+
+const getRegNo = (id, date) => {
+  const year = new Date(date).getFullYear();
+  const month = new Date(date).getMonth();
+  const day = new Date(date).getDate();
+  const finalDay =
+    day >= 9 ? new Date(date).getDate() : `0${new Date(date).getDate()}`;
+  const finalMonth =
+    month >= 9 ? new Date(date).getMonth() : `0${new Date(date).getMonth()}`;
+  return `${finalMonth}-${finalDay}-${year}-${id}`;
+};
+
+const printClearance = async (req, res) => {
+  // Load the docx file as binary content
+  const content = fs.readFileSync(
+    path.resolve(__dirname, "../files/clearance.docx"),
+    "binary"
+  );
+
+  const zip = new PizZip(content);
+
+  const doc = new Docxtemplater(zip, {
+    paragraphLoop: true,
+    linebreaks: true,
+  });
+
+  const dateTimeFormat = new Date(req.body.createdAt).toLocaleString(
+    "default",
+    {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    }
+  );
+
+  const birthDate = new Date(req.body.dateOfBirth).toLocaleString("default", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  const issuedOn = new Date(req.body.issuedOn).toLocaleString("default", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  const dateApplied = new Date(req.body.createdAt).toLocaleString("default", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  const regNo = getRegNo(req.body.id, dateTimeFormat);
+
+  // Render the document (Replace {first_name} by John, {last_name} by Doe, ...)
+  doc.render({
+    ...req.body,
+    regNo,
+    dateApplied,
+    issuedOn,
+    birthDate,
+  });
+
+  const buf = doc.getZip().generate({
+    type: "nodebuffer",
+    // compression: DEFLATE adds a compression step.
+    // For a 50MB output document, expect 500ms additional CPU time
+    compression: "DEFLATE",
+  });
+
+  const filename = `${req.body.fname}_${req.body.mname}_${req.body.lname}`;
+
+  // buf is a nodejs Buffer, you can either write it to a
+  // file or res.send it with express for example.
+  fs.writeFileSync(path.resolve(__dirname, `../images/${filename}.docx`), buf);
+
+  /* const inputPath = path.resolve(__dirname, "../files/output.docx");
+  const outputPath = path.resolve(__dirname, "../files/myDoc.pdf");
+
+  convertToPDF = async () => {
+    const pdfdoc = await PDFNet.PDFDoc.create();
+    await pdfdoc.initSecurityHandler();
+    await PDFNet.Convert.toPdf(pdfdoc, inputPath);
+    pdfdoc.save(outputPath, PDFNet.SFDoc.SaveOptions.e_linearized);
+  };
+
+  PDFNet.runWithCleanup(convertToPDF).then(() => {
+    fs.readFile(outputPath, (err, data) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.send(data);
+      }
+    });
+  }); */
+};
 
 // CREATE CLEARANCE
 const addClearance = async (req, res) => {
@@ -905,6 +1010,7 @@ const clearanceIncomeStatisticalReport = async (req, res) => {
 };
 
 module.exports = {
+  printClearance,
   addClearance,
   renewClearance,
   getAllClearances,

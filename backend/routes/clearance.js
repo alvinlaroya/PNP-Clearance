@@ -6,6 +6,7 @@ const clearance = require("../controllers/clearance.js");
 const router = require("express").Router();
 
 // routes
+router.post("/printClearance", clearance.upload, clearance.printClearance);
 router.post("/addClearance", clearance.upload, clearance.addClearance);
 router.post("/renewClearance", clearance.upload, clearance.renewClearance);
 router.get("/getClearances", middleware, clearance.getAllClearances);
