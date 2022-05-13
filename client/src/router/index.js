@@ -19,8 +19,6 @@ import AddClearance from "@/components/navigation/AddClearance.vue";
 import RenewClearance from "@/components/navigation/RenewClearance.vue";
 import UpdateClearance from "@/components/navigation/UpdateClearance.vue";
 
-import Print from "@/components/Print.vue";
-
 //Narbar
 import Navbar from "../components/navigation/Navbar.vue";
 import Sidebar from "../components/navigation/Sidebar.vue";
@@ -45,13 +43,6 @@ const routes = [
     components: {
       default: Register,
       navbar: Navbar,
-    },
-  },
-  {
-    path: "/print",
-    name: "print",
-    components: {
-      default: Print,
     },
   },
   {
