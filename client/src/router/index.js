@@ -13,11 +13,14 @@ import CriminalCase from "@/views/navigation/CriminalCase.vue";
 import UserManagement from "@/views/navigation/UserManagement.vue";
 import StatisticalReport from "@/views/navigation/StatisticalReport.vue";
 import ChiefOfPolice from "@/views/navigation/ChiefOfPolice.vue";
+import Applicant from "@/views/navigation/Applicant.vue";
 
 // Forms
 import AddClearance from "@/components/navigation/AddClearance.vue";
+import AddApplicant from "@/components/navigation/AddApplicant.vue";
 import RenewClearance from "@/components/navigation/RenewClearance.vue";
 import UpdateClearance from "@/components/navigation/UpdateClearance.vue";
+import UpdateApplicant from "@/components/navigation/UpdateApplicant.vue";
 
 //Narbar
 import Navbar from "../components/navigation/Navbar.vue";
@@ -53,10 +56,82 @@ const routes = [
     },
   },
   {
+    path: "/applicant",
+    name: "navigation.applicant",
+    components: {
+      default: Applicant,
+      navbar: Navbar,
+      sidebar: Sidebar,
+    },
+    beforeEnter(to, from, next) {
+      Auth.isAuthenticated()
+        .then((response) => {
+          if (response) {
+            next(); // If authenticated, proceed with the redirect
+          } else {
+            next({ name: "auth.login" });
+          }
+          /* console.log(response.data) */
+          next();
+        })
+        .catch(() => {
+          next({ name: "auth.login" });
+        });
+    },
+  },
+  {
     path: "/dashboard",
     name: "navigation.dashboard",
     components: {
       default: Dashboard,
+      navbar: Navbar,
+      sidebar: Sidebar,
+    },
+    beforeEnter(to, from, next) {
+      Auth.isAuthenticated()
+        .then((response) => {
+          if (response) {
+            next(); // If authenticated, proceed with the redirect
+          } else {
+            next({ name: "auth.login" });
+          }
+          /* console.log(response.data) */
+          next();
+        })
+        .catch(() => {
+          next({ name: "auth.login" });
+        });
+    },
+  },
+  {
+    path: "/applicant",
+    name: "applicant.create",
+    components: {
+      default: AddApplicant,
+      navbar: Navbar,
+      sidebar: Sidebar,
+    },
+    beforeEnter(to, from, next) {
+      Auth.isAuthenticated()
+        .then((response) => {
+          if (response) {
+            next(); // If authenticated, proceed with the redirect
+          } else {
+            next({ name: "auth.login" });
+          }
+          /* console.log(response.data) */
+          next();
+        })
+        .catch(() => {
+          next({ name: "auth.login" });
+        });
+    },
+  },
+  {
+    path: "/applicant",
+    name: "applicant.update",
+    components: {
+      default: UpdateApplicant,
       navbar: Navbar,
       sidebar: Sidebar,
     },
@@ -104,7 +179,7 @@ const routes = [
     path: "/dashboard",
     name: "clearance.renew",
     components: {
-      default: RenewClearance,
+      default: AddClearance,
       navbar: Navbar,
       sidebar: Sidebar,
     },

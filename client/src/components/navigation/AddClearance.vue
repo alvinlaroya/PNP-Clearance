@@ -451,7 +451,21 @@ export default {
     ],
   }),
   computed: {
-    ...mapGetters(["relatedCase", "allPolice"]),
+    ...mapGetters(["relatedCase", "currentClearanceRenew", "allPolice"]),
+  },
+  mounted() {
+    this.clearance.fname = this.currentClearanceRenew.fname;
+    this.clearance.mname = this.currentClearanceRenew.mname;
+    this.clearance.lname = this.currentClearanceRenew.lname;
+    this.clearance.address = this.currentClearanceRenew.address;
+    this.clearance.dateOfBirth = this.currentClearanceRenew.dateOfBirth;
+    this.clearance.placeOfBirth = this.currentClearanceRenew.placeOfBirth;
+    this.clearance.age = this.currentClearanceRenew.age;
+    this.clearance.civilStatus = this.currentClearanceRenew.civilStatus;
+    this.clearance.citizenship = this.currentClearanceRenew.citizenship;
+    this.clearance.height = this.currentClearanceRenew.height;
+    this.clearance.weight = this.currentClearanceRenew.weight;
+    this.clearance.phone = this.currentClearanceRenew.phone;
   },
   methods: {
     ...mapActions(["addClearance", "searchCase", "fetchPolice"]),

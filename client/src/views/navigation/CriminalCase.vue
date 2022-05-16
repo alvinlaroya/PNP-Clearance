@@ -265,7 +265,7 @@ export default {
       { text: "Middle name", value: "mname" },
       { text: "Last name", value: "lname" },
       { text: "Status", value: "status" },
-      { text: "Create on", value: "createdAt" },
+      { text: "Created at", value: "createdAt" },
     ],
     valid: true,
     validEdit: true,

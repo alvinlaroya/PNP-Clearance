@@ -18,11 +18,13 @@ app.use(express.urlencoded({ extended: true }));
 const userRoutes = require("./routes/user.js");
 const clearanceRoutes = require("./routes/clearance.js");
 const caseRoutes = require("./routes/case.js");
+const applicantRoutes = require("./routes/applicant.js");
 const chiefOfPoliceRoutes = require("./routes/chiefOfPolice.js");
 
 app.use("/api/user", userRoutes);
 app.use("/api/clearance", clearanceRoutes);
 app.use("/api/case", caseRoutes);
+app.use("/api/applicant", applicantRoutes);
 app.use("/api/chiefOfPolice", chiefOfPoliceRoutes);
 
 // static images folder

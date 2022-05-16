@@ -127,6 +127,11 @@ export default {
         subheader: "Navigation",
         subheaderList: [
           {
+            text: "Applicant Record",
+            icon: "mdi-clipboard-account-outline",
+            path: "/applicant",
+          },
+          {
             text: "Police Clearance",
             icon: "mdi-view-dashboard-outline",
             path: "/dashboard",

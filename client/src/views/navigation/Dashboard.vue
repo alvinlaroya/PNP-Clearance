@@ -52,9 +52,9 @@
             <v-container fluid>
               <v-row>
                 <v-col md="4" xs="4" sm="4" lg="6">
-                  <v-btn color="primary" dark @click="addClearance()"
+                  <!-- <v-btn color="primary" dark @click="addClearance()"
                     >Add Application</v-btn
-                  >
+                  > -->
                 </v-col>
                 <v-col md="8" xs="8" sm="8" lg="6">
                   <v-text-field
@@ -217,20 +217,6 @@
                   class="elevation-0"
                 >
                   <template v-slot:item.actions="{ item }">
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-icon
-                          class="mr-2"
-                          color="green"
-                          @click="renewClearance(item)"
-                          v-bind="attrs"
-                          v-on="on"
-                        >
-                          mdi-autorenew
-                        </v-icon>
-                      </template>
-                      <span>Renew Application</span>
-                    </v-tooltip>
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on, attrs }">
                         <v-icon

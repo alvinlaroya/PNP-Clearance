@@ -32,6 +32,7 @@ db.sequelize = sequelize;
 db.users = require("./user")(sequelize, DataTypes);
 db.clearances = require("./clearance")(sequelize, DataTypes);
 db.cases = require("./case")(sequelize, DataTypes);
+db.applicants = require("./applicant")(sequelize, DataTypes);
 db.chiefOfPolice = require("./chiefOfPolice")(sequelize, DataTypes);
 
 db.sequelize.sync({ force: false }).then(() => {
